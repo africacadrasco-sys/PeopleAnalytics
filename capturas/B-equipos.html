@@ -1,0 +1,2536 @@
+<!DOCTYPE html>
+<html lang="es-CO">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>EAFIT People Analytics Lab · IA aplicada a Talento Humano</title>
+  <meta name="description" content="Juego de repaso de People Analytics: cultura del dato, niveles de madurez, habilidades clave y las nueve dimensiones. Material de apoyo académico.">
+  <meta name="robots" content="noindex">
+  <style>
+/*
+ * ESTILOS — EAFIT People Analytics Lab
+ * Todos los colores y tipografías salen de brand/BRAND.md.
+ * No agregues colores fuera de estos tokens.
+ */
+
+/* ---------- Tipografía (incluida localmente, licencia OFL) ---------- */
+/* ---------- Tokens de marca (BRAND.md, sección 1) ---------- */
+:root {
+  --eafit-azul: #223675;
+  --eafit-azul-profundo: #16265C;
+  --eafit-cian: #0AA4D8;
+  --eafit-gris-texto: #5A6273;
+  --eafit-fondo-1: #EDF1F9;
+  --eafit-fondo-2: #D7EEFA;
+  --eafit-fondo-3: #F2F7FD;
+  --eafit-borde: #DCE8F6;
+  --eafit-blanco: #FFFFFF;
+
+  --fuente: "Carlito", Calibri, Arial, sans-serif;
+  --radio: 6px;
+  --ancho: 60rem;
+  --sombra: 0 1px 2px rgba(34, 54, 117, 0.12);
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html { font-size: 106.25%; -webkit-text-size-adjust: 100%; }
+html.proyector { font-size: 150%; }
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  font-family: var(--fuente);
+  font-size: 1rem;
+  line-height: 1.45;
+  color: var(--eafit-azul);
+  background: var(--eafit-blanco);
+}
+
+h1, h2, h3, p { margin: 0; }
+h1 { font-size: 1.75rem; line-height: 1.15; }
+h2 { font-size: 1.25rem; line-height: 1.2; }
+img { max-width: 100%; height: auto; }
+
+.solo-lectores {
+  position: absolute; width: 1px; height: 1px; overflow: hidden;
+  clip: rect(0 0 0 0); white-space: nowrap;
+}
+
+.salto {
+  position: absolute; left: 0.5rem; top: -4rem; z-index: 10;
+  background: var(--eafit-azul); color: var(--eafit-blanco);
+  padding: 0.5rem 0.75rem; border-radius: var(--radio);
+}
+.salto:focus { top: 0.5rem; }
+
+/* Foco visible en todo lo interactivo */
+:focus-visible { outline: 3px solid var(--eafit-azul); outline-offset: 2px; }
+.portada :focus-visible, .facilitador :focus-visible, .retro--alerta :focus-visible {
+  outline-color: var(--eafit-blanco);
+}
+main:focus { outline: none; }
+
+/* ---------- Cabecera y pie ---------- */
+.cabecera {
+  display: flex; align-items: center; justify-content: space-between; gap: 0.75rem;
+  padding: 0.5rem 1rem;
+  border-bottom: 2px solid var(--eafit-cian);
+  background: var(--eafit-blanco);
+}
+.cabecera__marca { display: flex; align-items: center; gap: 0.75rem; min-width: 0; }
+/* El logo no se deforma ni se recolorea; se deja aire a su alrededor. */
+.cabecera__logo { height: 2.5rem; width: auto; margin: 0.25rem 0.5rem 0.25rem 0; }
+.cabecera__nombre {
+  font-weight: 700; font-size: 1rem; padding-left: 0.75rem;
+  border-left: 1px solid var(--eafit-borde); white-space: nowrap;
+}
+.cabecera__acciones { display: flex; gap: 0.25rem; flex-wrap: wrap; justify-content: flex-end; }
+
+main { flex: 1; width: 100%; }
+.contenedor { max-width: var(--ancho); margin: 0 auto; padding: 1.25rem 1rem 2rem; }
+
+.pie {
+  border-top: 1px solid var(--eafit-cian);
+  padding: 0.75rem 1rem 1rem;
+  text-align: center;
+  font-size: 0.8rem;
+}
+.pie__institucional { font-weight: 700; }
+.pie__academico { color: var(--eafit-gris-texto); }
+
+/* ---------- Botones ---------- */
+.boton {
+  font: inherit; font-weight: 700; cursor: pointer;
+  min-height: 2.75rem; padding: 0.55rem 1.1rem;
+  border-radius: var(--radio);
+  border: 2px solid var(--eafit-azul);
+  background: var(--eafit-azul); color: var(--eafit-blanco);
+}
+.boton:hover { background: var(--eafit-azul-profundo); border-color: var(--eafit-azul-profundo); }
+.boton--secundario { background: var(--eafit-blanco); color: var(--eafit-azul); }
+.boton--secundario:hover { background: var(--eafit-fondo-1); border-color: var(--eafit-azul); }
+.boton--texto {
+  background: transparent; color: var(--eafit-azul); border-color: transparent;
+  padding: 0.4rem 0.6rem; font-size: 0.9rem;
+}
+.boton--texto:hover { background: var(--eafit-fondo-1); border-color: transparent; }
+.boton--claro { background: var(--eafit-blanco); color: var(--eafit-azul); border-color: var(--eafit-blanco); }
+.boton--claro:hover { background: var(--eafit-fondo-2); border-color: var(--eafit-fondo-2); }
+.boton[disabled] { opacity: 0.55; cursor: not-allowed; }
+.acciones { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-top: 1.25rem; }
+
+/* ---------- Antetítulo (BRAND.md, sección 5) ---------- */
+.antetitulo {
+  font-size: 0.8rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--eafit-azul);
+  padding-bottom: 0.3rem; margin-bottom: 0.5rem;
+  border-bottom: 3px solid var(--eafit-cian);
+  display: inline-block;
+}
+
+/* ---------- Portada ---------- */
+.portada { background: var(--eafit-azul); color: var(--eafit-blanco); }
+.portada .contenedor { padding-top: 2rem; padding-bottom: 2rem; }
+/* El archivo del logo trae fondo azul #223675: solo se usa sobre ese mismo azul. */
+.portada__logo { width: 11rem; height: auto; display: block; margin-bottom: 2rem; }
+.portada .antetitulo { color: var(--eafit-blanco); }
+.portada h1 { font-size: 2.4rem; margin-bottom: 0.75rem; }
+.portada__texto { max-width: 36rem; font-size: 1.1rem; }
+.portada__firma {
+  margin-top: 2rem; padding-top: 0.75rem; border-top: 1px solid var(--eafit-cian);
+  font-weight: 700;
+}
+.datos { display: grid; gap: 0.75rem; grid-template-columns: 1fr; }
+.dato { background: var(--eafit-fondo-1); border-radius: var(--radio); padding: 0.9rem 1rem; }
+.dato strong { display: block; font-size: 1.1rem; }
+.dato span { color: var(--eafit-gris-texto); }
+
+/* ---------- Mapa de misiones ---------- */
+.marcador { display: flex; flex-wrap: wrap; gap: 0.5rem 1.5rem; margin: 0.75rem 0 1.25rem; font-weight: 700; }
+.lista-misiones { list-style: none; margin: 0; padding: 0; display: grid; gap: 0.75rem; grid-template-columns: 1fr; }
+.mision {
+  display: grid; grid-template-columns: auto 1fr; gap: 0.25rem 0.9rem; align-items: start;
+  border: 1px solid var(--eafit-borde); border-radius: var(--radio);
+  background: var(--eafit-fondo-3); padding: 1rem; box-shadow: var(--sombra);
+}
+.mision__numero {
+  grid-row: span 3;
+  width: 2.4rem; height: 2.4rem; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  background: var(--eafit-azul); color: var(--eafit-blanco); font-weight: 700;
+}
+.mision__resumen { color: var(--eafit-gris-texto); }
+.mision__estado { font-size: 0.9rem; font-weight: 700; display: flex; align-items: center; gap: 0.35rem; }
+.mision__pie { grid-column: 2; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 0.5rem; margin-top: 0.4rem; }
+.mision--bloqueada { background: var(--eafit-blanco); }
+.mision--bloqueada .mision__numero { background: var(--eafit-blanco); color: var(--eafit-azul); border: 2px solid var(--eafit-azul); }
+
+.icono { width: 1.15em; height: 1.15em; flex: none; vertical-align: -0.18em; }
+
+/* ---------- Presentación de la misión ---------- */
+.intro__instruccion { font-size: 1.15rem; max-width: 40rem; margin: 0.75rem 0 1rem; }
+.reglas { list-style: none; padding: 0; margin: 0; display: grid; gap: 0.5rem; max-width: 40rem; }
+.reglas li { background: var(--eafit-fondo-1); border-radius: var(--radio); padding: 0.6rem 0.8rem; }
+
+/* ---------- Estado de la partida ---------- */
+.estado { display: flex; flex-wrap: wrap; align-items: center; gap: 0.4rem 1.25rem; font-weight: 700; font-size: 0.95rem; }
+.estado__alertas { display: inline-flex; align-items: center; gap: 0.3rem; }
+.progreso { height: 0.5rem; background: var(--eafit-fondo-1); border-radius: 1rem; overflow: hidden; margin: 0.5rem 0 1rem; }
+.progreso__barra { height: 100%; background: var(--eafit-cian); transition: width 0.25s ease; }
+
+/* ---------- Misión 1: tarjeta y destinos ---------- */
+.tarjeta {
+  background: var(--eafit-blanco);
+  border: 2px solid var(--eafit-azul); border-left-width: 0.5rem;
+  border-radius: var(--radio); box-shadow: var(--sombra);
+  padding: 1rem 1.1rem; margin-bottom: 1rem;
+  font-size: 1.2rem; font-weight: 700; line-height: 1.3;
+  position: relative; z-index: 2;
+}
+.tarjeta__etiqueta { display: block; font-size: 0.8rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--eafit-gris-texto); margin-bottom: 0.3rem; }
+.tarjeta--arrastrable { cursor: grab; touch-action: none; user-select: none; -webkit-user-select: none; }
+.tarjeta--moviendo { cursor: grabbing; box-shadow: 0 8px 18px rgba(34, 54, 117, 0.25); }
+.tarjeta--regresa { transition: transform 0.2s ease; }
+
+.destinos { display: grid; gap: 0.6rem; grid-template-columns: 1fr; }
+.destino {
+  font: inherit; text-align: left; cursor: pointer; color: var(--eafit-azul);
+  display: grid; grid-template-columns: auto 1fr auto; gap: 0.1rem 0.7rem; align-items: center;
+  min-height: 3.75rem; padding: 0.65rem 0.9rem;
+  background: var(--eafit-fondo-1);
+  border: 2px solid var(--eafit-azul); border-radius: var(--radio);
+}
+.destino:hover, .destino--encima { background: var(--eafit-fondo-2); }
+.destino--encima { outline: 3px solid var(--eafit-cian); outline-offset: 2px; }
+.destino > .icono { grid-row: span 2; width: 1.6rem; height: 1.6rem; }
+.destino__texto { font-weight: 700; font-size: 1.05rem; }
+.destino__ayuda { grid-column: 2; font-size: 0.85rem; color: var(--eafit-gris-texto); }
+.destino__tecla {
+  grid-row: 1 / span 2; grid-column: 3;
+  border: 1px solid var(--eafit-azul); border-radius: 4px; padding: 0 0.4rem; font-size: 0.8rem; font-weight: 700;
+}
+.destino[disabled] { cursor: default; opacity: 1; }
+.destino--apagado { background: var(--eafit-blanco); border-color: var(--eafit-borde); color: var(--eafit-gris-texto); }
+.destino--era { background: var(--eafit-fondo-2); border-color: var(--eafit-cian); border-width: 3px; }
+.destino--elegido-mal { background: var(--eafit-blanco); border-style: dashed; border-color: var(--eafit-azul-profundo); }
+.destino__marca { grid-column: 2; font-size: 0.85rem; font-weight: 700; display: flex; align-items: center; gap: 0.25rem; }
+.ayuda-teclado { margin-top: 0.6rem; font-size: 0.85rem; color: var(--eafit-gris-texto); }
+
+/* ---------- Retroalimentación (BRAND.md, sección 7: pendiente de validación) ---------- */
+.retro { margin-top: 1rem; padding: 0.9rem 1rem; border-radius: var(--radio); }
+.retro__titulo { display: flex; align-items: center; gap: 0.45rem; font-size: 1.15rem; font-weight: 700; margin-bottom: 0.35rem; }
+.retro__fuente { font-size: 0.85rem; margin-top: 0.35rem; }
+.retro--ok { background: var(--eafit-fondo-2); border: 2px solid var(--eafit-cian); border-left-width: 0.5rem; }
+.retro--mal { background: var(--eafit-blanco); border: 2px dashed var(--eafit-azul-profundo); color: var(--eafit-azul-profundo); }
+.retro--alerta { background: var(--eafit-azul-profundo); color: var(--eafit-blanco); border: 2px solid var(--eafit-azul-profundo); }
+.retro--mal .retro__fuente { color: var(--eafit-gris-texto); }
+
+/* ---------- Resumen y repaso ---------- */
+.insignia {
+  display: flex; align-items: center; gap: 0.9rem;
+  background: var(--eafit-azul); color: var(--eafit-blanco);
+  border-radius: var(--radio); padding: 1rem; margin: 1rem 0;
+}
+.insignia .icono { width: 2.6rem; height: 2.6rem; }
+.insignia--pendiente { background: var(--eafit-blanco); color: var(--eafit-azul); border: 2px dashed var(--eafit-azul); }
+.insignia__nombre { font-size: 1.25rem; font-weight: 700; display: block; }
+.cifras { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.6rem; }
+.cifra { background: var(--eafit-fondo-1); border-radius: var(--radio); padding: 0.75rem; }
+.cifra strong { display: block; font-size: 1.6rem; line-height: 1.1; }
+.cifra span { font-size: 0.9rem; color: var(--eafit-gris-texto); }
+
+.repaso { list-style: none; margin: 1rem 0 0; padding: 0; display: grid; gap: 0.75rem; }
+.repaso li { border: 1px solid var(--eafit-borde); border-left: 0.4rem solid var(--eafit-cian); border-radius: var(--radio); padding: 0.8rem 1rem; background: var(--eafit-fondo-3); }
+.repaso__enunciado { font-weight: 700; }
+.repaso__fuente { font-size: 0.85rem; color: var(--eafit-gris-texto); }
+
+/* ---------- Configuración de la sala ---------- */
+.campos { display: grid; gap: 0.75rem; grid-template-columns: 1fr; margin-top: 1rem; max-width: 44rem; }
+.campo { display: grid; gap: 0.25rem; font-weight: 700; }
+.campo input {
+  font: inherit; color: var(--eafit-azul); background: var(--eafit-blanco);
+  border: 2px solid var(--eafit-azul); border-radius: var(--radio);
+  min-height: 2.75rem; padding: 0.4rem 0.7rem; width: 100%;
+}
+.nota { font-size: 0.9rem; color: var(--eafit-gris-texto); margin-top: 0.6rem; }
+.boton--contorno { background: transparent; color: var(--eafit-blanco); border-color: var(--eafit-blanco); }
+.boton--contorno:hover { background: var(--eafit-azul-profundo); border-color: var(--eafit-blanco); }
+.boton--chico { min-height: 2.4rem; padding: 0.3rem 0.8rem; font-size: 0.9rem; }
+.boton--icono { min-height: 2.75rem; min-width: 2.75rem; padding: 0.3rem; display: inline-flex; align-items: center; justify-content: center; }
+
+/* ---------- Opciones de respuesta ---------- */
+.pregunta { font-size: 1.25rem; font-weight: 700; line-height: 1.3; margin: 0.25rem 0 0.9rem; }
+.opciones { display: grid; gap: 0.6rem; grid-template-columns: 1fr; }
+.opcion {
+  font: inherit; text-align: left; cursor: pointer; color: var(--eafit-azul);
+  display: grid; grid-template-columns: auto 1fr; gap: 0.1rem 0.7rem; align-items: center;
+  min-height: 3.25rem; padding: 0.6rem 0.9rem;
+  background: var(--eafit-fondo-1);
+  border: 2px solid var(--eafit-azul); border-radius: var(--radio);
+}
+.opcion:hover { background: var(--eafit-fondo-2); }
+.opcion__texto { font-weight: 700; grid-column: 2; }
+.opcion__ayuda { grid-column: 2; font-size: 0.9rem; color: var(--eafit-gris-texto); }
+.opcion__tecla, .opcion__casilla {
+  grid-row: span 2; width: 1.7rem; height: 1.7rem; display: flex; align-items: center; justify-content: center;
+  border: 2px solid var(--eafit-azul); border-radius: 4px; font-size: 0.85rem; font-weight: 700; background: var(--eafit-blanco);
+}
+.opcion__casilla .icono { visibility: hidden; }
+.opcion--marcada { background: var(--eafit-fondo-2); border-width: 3px; }
+.opcion--marcada .opcion__casilla { background: var(--eafit-azul); color: var(--eafit-blanco); }
+.opcion--marcada .opcion__casilla .icono, .opcion--era .opcion__casilla .icono { visibility: visible; }
+.opcion__marca { grid-column: 2; font-size: 0.85rem; font-weight: 700; display: flex; align-items: center; gap: 0.25rem; }
+.opcion[disabled] { cursor: default; opacity: 1; }
+.opcion--apagada { background: var(--eafit-blanco); border-color: var(--eafit-borde); color: var(--eafit-gris-texto); }
+.opcion--apagada .opcion__tecla, .opcion--apagada .opcion__casilla { border-color: var(--eafit-borde); }
+.opcion--era { background: var(--eafit-fondo-2); border-color: var(--eafit-cian); border-width: 3px; }
+.opcion--elegido-mal { background: var(--eafit-blanco); border-style: dashed; border-color: var(--eafit-azul-profundo); }
+.opciones--fila .opcion { grid-template-columns: 1fr; }
+.opciones--fila .opcion__texto, .opciones--fila .opcion__ayuda { grid-column: 1; }
+
+.ficha { display: flex; align-items: center; gap: 0.4rem; flex-wrap: wrap; background: var(--eafit-azul); color: var(--eafit-blanco); border-radius: var(--radio); padding: 0.5rem 0.8rem; margin-bottom: 0.75rem; }
+.pista { background: var(--eafit-fondo-2); border-left: 0.4rem solid var(--eafit-cian); border-radius: var(--radio); padding: 0.6rem 0.8rem; margin-top: 0.75rem; }
+
+/* ---------- Simulador de chat (misión 4) ---------- */
+.chat { display: grid; gap: 0.5rem; margin-bottom: 1rem; }
+.burbuja { max-width: 88%; padding: 0.65rem 0.9rem; border-radius: var(--radio); }
+.burbuja__quien { display: block; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 0.15rem; }
+.burbuja--usuario { justify-self: end; background: var(--eafit-fondo-1); border: 1px solid var(--eafit-borde); }
+.burbuja--agente { justify-self: start; background: var(--eafit-blanco); border: 2px solid var(--eafit-azul); border-left-width: 0.4rem; }
+.chat .nota { margin-top: 0; font-style: italic; }
+
+/* ---------- Ordenar pasos ---------- */
+.pasos { list-style: none; margin: 0; padding: 0; display: grid; gap: 0.5rem; }
+.paso {
+  display: grid; grid-template-columns: auto 1fr auto; gap: 0.6rem; align-items: center;
+  background: var(--eafit-fondo-1); border: 2px solid var(--eafit-azul); border-radius: var(--radio); padding: 0.5rem 0.7rem;
+}
+.paso__numero { width: 1.8rem; height: 1.8rem; border-radius: 50%; background: var(--eafit-azul); color: var(--eafit-blanco); display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 0.9rem; }
+.paso__texto { font-weight: 700; }
+.paso__botones { display: flex; gap: 0.35rem; }
+.paso--bien { background: var(--eafit-fondo-2); border-color: var(--eafit-cian); border-width: 3px; }
+.paso--mal { background: var(--eafit-blanco); border-style: dashed; border-color: var(--eafit-azul-profundo); }
+
+/* ---------- Equipos, turnos y tabla de posiciones ---------- */
+.turnos { display: grid; gap: 0.5rem; grid-template-columns: repeat(auto-fit, minmax(7rem, 1fr)); margin-bottom: 0.75rem; }
+.turno { display: grid; padding: 0.45rem 0.7rem; border: 1px solid var(--eafit-borde); border-radius: var(--radio); background: var(--eafit-blanco); color: var(--eafit-gris-texto); font-size: 0.9rem; }
+.turno strong { color: var(--eafit-azul); font-size: 1rem; }
+.turno--activo { background: var(--eafit-azul); border-color: var(--eafit-azul); color: var(--eafit-blanco); }
+.turno--activo strong { color: var(--eafit-blanco); font-size: 1.15rem; }
+.turno__etiqueta { font-size: 0.72rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; }
+.tabla { width: 100%; max-width: 34rem; border-collapse: collapse; margin: 0.5rem 0 1.25rem; }
+.tabla caption { text-align: left; font-weight: 700; font-size: 1.1rem; padding-bottom: 0.35rem; }
+.tabla th, .tabla td { text-align: left; padding: 0.45rem 0.7rem; border-bottom: 1px solid var(--eafit-borde); }
+.tabla tr:first-child th, .tabla tr:first-child td { background: var(--eafit-fondo-2); font-weight: 700; }
+.tabla td:last-child { text-align: right; white-space: nowrap; }
+
+/* ---------- Reloj y comodines (reto final) ---------- */
+.comodines { display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem; margin-bottom: 0.9rem; }
+.reloj { display: flex; align-items: center; gap: 0.4rem; font-weight: 700; font-size: 1.15rem; flex: 1 1 12rem; }
+.reloj__pista { flex: 1; height: 0.5rem; background: var(--eafit-fondo-1); border-radius: 1rem; overflow: hidden; min-width: 4rem; }
+.reloj__barra { display: block; height: 100%; background: var(--eafit-azul); transition: width 0.9s linear; }
+
+/* ---------- Avisos y resultados finales ---------- */
+.aviso { display: flex; align-items: center; gap: 0.45rem; flex-wrap: wrap; background: var(--eafit-fondo-2); border: 2px solid var(--eafit-cian); border-radius: var(--radio); padding: 0.6rem 0.8rem; margin-bottom: 1rem; }
+.aviso--pendiente { background: var(--eafit-blanco); border: 2px dashed var(--eafit-azul); }
+.logros { list-style: none; margin: 0.5rem 0 1.25rem; padding: 0; display: grid; gap: 0.5rem; grid-template-columns: 1fr; }
+.logro { display: flex; align-items: center; gap: 0.7rem; background: var(--eafit-azul); color: var(--eafit-blanco); border-radius: var(--radio); padding: 0.6rem 0.8rem; }
+.logro .icono { width: 1.8rem; height: 1.8rem; }
+.logro span span { display: block; font-size: 0.85rem; }
+.logro strong { display: block; }
+.logro--pendiente { background: var(--eafit-blanco); color: var(--eafit-azul); border: 2px dashed var(--eafit-azul); }
+.dos-columnas { display: grid; gap: 1rem; grid-template-columns: 1fr; }
+.conceptos { margin: 0.4rem 0 0; padding-left: 1.2rem; display: grid; gap: 0.3rem; }
+.cierre { margin-top: 1.25rem; padding: 0.9rem 1rem; background: var(--eafit-azul); color: var(--eafit-blanco); border-radius: var(--radio); font-size: 1.15rem; font-weight: 700; }
+.firma { margin-top: 1.25rem; padding-top: 0.6rem; border-top: 1px solid var(--eafit-cian); font-weight: 700; }
+.pie__facilitador { font-size: 0.75rem; min-height: 2rem; color: var(--eafit-gris-texto); margin-top: 0.25rem; }
+
+/* ---------- Modo facilitador ---------- */
+.facilitador {
+  background: var(--eafit-azul-profundo); color: var(--eafit-blanco);
+  padding: 0.4rem 1rem; display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem;
+  font-size: 0.9rem;
+}
+.facilitador[hidden] { display: none; }
+.facilitador strong { margin-right: 0.5rem; }
+.facilitador .boton { min-height: 2.2rem; padding: 0.25rem 0.7rem; font-size: 0.85rem; }
+.clave { margin-top: 0.75rem; padding: 0.6rem 0.8rem; background: var(--eafit-azul-profundo); color: var(--eafit-blanco); border-radius: var(--radio); }
+
+/* ---------- Pantallas anchas y proyector ---------- */
+@media (min-width: 40rem) {
+  h1 { font-size: 2.1rem; }
+  .portada h1 { font-size: 3.2rem; }
+  .portada .contenedor { padding-top: 3rem; padding-bottom: 3rem; }
+  .datos { grid-template-columns: repeat(3, 1fr); }
+  .lista-misiones { grid-template-columns: repeat(2, 1fr); }
+  .destinos { grid-template-columns: repeat(3, 1fr); }
+  .destino { grid-template-columns: auto 1fr; align-content: start; min-height: 6.5rem; }
+  .destino__tecla { grid-row: auto; grid-column: 2; justify-self: start; margin-top: 0.3rem; }
+  .tarjeta { font-size: 1.45rem; padding: 1.4rem 1.5rem; }
+  .cifras { grid-template-columns: repeat(4, 1fr); }
+  .destinos--2 { grid-template-columns: repeat(2, 1fr); }
+  .destinos--4 { grid-template-columns: repeat(4, 1fr); }
+  .destinos--4 .destino { grid-template-columns: 1fr; min-height: 5rem; }
+  .destinos--4 .destino > .icono { display: none; }
+  .destinos--4 .destino__tecla, .destinos--4 .destino__marca { grid-column: 1; }
+  .destinos--5 { grid-template-columns: repeat(5, 1fr); }
+  .destinos--5 .destino { min-height: 5rem; grid-template-columns: 1fr; }
+  .destinos--5 .destino > .icono { display: none; }
+  .destinos--5 .destino__tecla { grid-column: 1; }
+  .destinos--5 .destino__marca { grid-column: 1; }
+  .opciones--fila { grid-template-columns: repeat(3, 1fr); }
+  .campos { grid-template-columns: repeat(3, 1fr); }
+  .logros { grid-template-columns: repeat(2, 1fr); }
+  .dos-columnas { grid-template-columns: repeat(2, 1fr); }
+  .pregunta { font-size: 1.45rem; }
+}
+@media (min-width: 100rem) {
+  html { font-size: 137.5%; }
+  html.proyector { font-size: 162.5%; }
+}
+
+/* Sin animaciones para quien las desactiva en su sistema */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { transition: none !important; animation: none !important; }
+}
+
+/* Alto contraste del sistema (Windows) */
+@media (forced-colors: active) {
+  .boton, .destino, .tarjeta, .retro, .insignia { border: 2px solid; }
+}
+
+</style>
+</head>
+<body>
+  <a class="salto" href="#contenido">Saltar al contenido</a>
+
+  <header class="cabecera">
+    <div class="cabecera__marca">
+      <img class="cabecera__logo" src="data:image/png;base64,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" width="731" height="328" alt="Universidad EAFIT">
+      <span class="cabecera__nombre">People Analytics Lab</span>
+    </div>
+    <nav class="cabecera__acciones" aria-label="Opciones del juego">
+      <button type="button" class="boton boton--texto" id="btn-misiones">Misiones</button>
+      <button type="button" class="boton boton--texto" id="btn-sonido" aria-pressed="false">Sonido: apagado</button>
+    </nav>
+  </header>
+
+  <div id="barra-facilitador" class="facilitador" hidden></div>
+
+  <main id="contenido" tabindex="-1"></main>
+
+  <footer class="pie">
+    <p class="pie__institucional">Universidad EAFIT · www.eafit.edu.co · Vigilada Mineducación</p>
+    <p class="pie__academico">Material de apoyo académico — Programa IA aplicada a Talento Humano</p>
+    <button type="button" class="boton boton--texto pie__facilitador" id="btn-facilitador">Facilitador</button>
+  </footer>
+
+  <div id="vivo" class="solo-lectores" aria-live="polite"></div>
+
+  <noscript><p style="padding:1rem">Este juego necesita JavaScript activado en el navegador.</p></noscript>
+
+  <script>window.AA_DEMO="config";</script>
+<script>
+/*
+ * BANCO DE PREGUNTAS — EAFIT People Analytics Lab
+ * ------------------------------------------------------------------
+ * Este archivo se puede editar sin tocar la lógica del juego.
+ * Es un archivo .js (y no .json) para que el juego abra con doble clic
+ * en index.html, sin servidor.
+ *
+ * Cada ítem tiene:
+ *   id          identificador único (no lo repitas)
+ *   mision      m1 … m6
+ *   concepto    A … G (ver CONTENIDO.md)
+ *   tipo        "clasificar" | "opcion" | "multi" | "ordenar"
+ *   enunciado   lo que lee el jugador
+ *   opciones    lista de { id, texto } (en "clasificar" se usan las
+ *               categorías de la misión y este campo no va)
+ *   correcta    id de la opción correcta
+ *               ("multi": lista de ids · "ordenar": lista de ids en orden)
+ *   explicacion 1–2 frases que se muestran después de responder
+ *   fuente      documento de la clase del que sale
+ *   critico     (opcional) true = fallarlo cuesta una "alerta de riesgo"
+ *   pista       (solo reto final) texto del comodín «Pista del facilitador»
+ *
+ * Después de editar, ejecuta:  node tools/validar.js
+ * Los casos marcados como ficticios son inventados para el juego.
+ */
+(function (raiz) {
+  "use strict";
+
+  var PPT = "Presentación «Clase 3 · People Analytics» (Parte 1)";
+  var NUEVE = "Lectura «Nine Dimensions for Excellence in People Analytics» (Insight222)";
+  var SIS = "Lectura «People Analytics, Evolved: A Systemic Approach» (Josh Bersin Company)";
+  var FICT = " · caso ficticio para el juego";
+
+  var SI_NO = [
+    { id: "si", texto: "Verdadero" },
+    { id: "no", texto: "Falso" }
+  ];
+
+  /* Textos generales del juego */
+  var juego = {
+    nombre: "EAFIT People Analytics Lab",
+    antetitulo: "IA aplicada a Talento Humano · People Analytics",
+    portada: "Eres analista en formación en el Laboratorio de People Analytics. Supera cinco misiones y un reto final para repasar lo que vimos en clase: de la intuición al análisis estratégico.",
+    lugar: "Laboratorio de People Analytics",
+    ejemploCritico: "como usar los datos para culpar o descuidar la privacidad",
+    cierre: "Los datos no reemplazan el criterio: las decisiones sobre personas se toman desde la evidencia y la responsabilidad."
+  };
+
+  var misiones = [
+    {
+      id: "m1",
+      titulo: "¿En qué nivel estamos?",
+      resumen: "Ubica cada pista en uno de los 4 niveles de madurez analítica.",
+      instruccion: "Lee la pista y decide a cuál de los cuatro niveles de madurez analítica corresponde: reporting, descriptivo, estratégico o sistémico. Toca un nivel o arrastra la tarjeta.",
+      insignia: "Radar de madurez",
+      etiqueta: "Pista",
+      seleccion: { porCategoria: 3 },
+      categorias: [
+        { id: "n1", texto: "1 · Reporting" },
+        { id: "n2", texto: "2 · Descriptivo" },
+        { id: "n3", texto: "3 · Estratégico" },
+        { id: "n4", texto: "4 · Sistémico" }
+      ]
+    },
+    {
+      id: "m2",
+      titulo: "Cultura del dato o señal de alerta",
+      resumen: "Distingue las prácticas que construyen cultura del dato.",
+      instruccion: "Lee cada comportamiento y decide si construye cultura del dato en Talento Humano o si es una señal de alerta. Toca una opción o arrastra la tarjeta.",
+      insignia: "Guardián de la cultura del dato",
+      etiqueta: "Comportamiento",
+      seleccion: { porCategoria: 6 },
+      categorias: [
+        { id: "practica", texto: "Cultura del dato", icono: "visto", ayuda: "Evidencia y responsabilidad" },
+        { id: "alerta", texto: "Señal de alerta", icono: "alto", ayuda: "Intuición, jerarquía, urgencia o mal uso" }
+      ]
+    },
+    {
+      id: "m3",
+      titulo: "El equipo ideal",
+      resumen: "Asigna cada habilidad a su área de conocimiento.",
+      instruccion: "Un equipo de People Analytics combina varias áreas de conocimiento. Lee cada habilidad y ubícala en su área: ciencia de datos, consultoría o ciencias del comportamiento.",
+      insignia: "Arquitecto de equipos",
+      etiqueta: "Habilidad",
+      seleccion: { porCategoria: 4 },
+      categorias: [
+        { id: "datos", texto: "Ciencia de datos" },
+        { id: "consultoria", texto: "Consultoría" },
+        { id: "comportamiento", texto: "Ciencias del comportamiento" }
+      ]
+    },
+    {
+      id: "m4",
+      titulo: "Las nueve dimensiones",
+      resumen: "Fundamentos, recursos y valor: el modelo de Insight222.",
+      instruccion: "El modelo de las nueve dimensiones las agrupa en tres categorías: fundamentos, recursos y valor. Ubica cada dimensión en su categoría y responde las preguntas sobre el modelo.",
+      insignia: "Navegante de las nueve dimensiones",
+      etiqueta: "Dimensión",
+      seleccion: { cantidad: 12 },
+      categorias: [
+        { id: "fundamentos", texto: "Fundamentos" },
+        { id: "recursos", texto: "Recursos" },
+        { id: "valor", texto: "Valor" }
+      ]
+    },
+    {
+      id: "m5",
+      titulo: "De la intuición a la evidencia",
+      resumen: "Qué es People Analytics, el caso de Juan y el enfoque sistémico.",
+      instruccion: "Responde las preguntas sobre qué es People Analytics, el caso de Juan y el enfoque sistémico. Algunas piden marcar varias opciones u ordenar pasos.",
+      insignia: "De la intuición a la evidencia",
+      seleccion: { cantidad: 10 }
+    },
+    {
+      id: "m6",
+      titulo: "Sala de decisiones",
+      resumen: "10 preguntas relámpago contra el reloj, con comodines.",
+      instruccion: "Preguntas relámpago mezcladas de todas las misiones, con reloj. Hay dos comodines para toda la partida: un 50/50 y una pista del facilitador.",
+      insignia: "Analista graduado",
+      seleccion: { cantidad: 10 },
+      segundos: 25
+    }
+  ];
+
+  var items = [
+    /* ============ MISIÓN 1 · ¿En qué nivel estamos? (C) ============ */
+    { id: "m1-01", mision: "m1", concepto: "C", tipo: "clasificar",
+      enunciado: "Responde la pregunta: «¿Qué pasó?»",
+      correcta: "n1",
+      explicacion: "El nivel 1, reporting, es reactivo: responde «¿qué pasó?».",
+      fuente: PPT },
+    { id: "m1-02", mision: "m1", concepto: "C", tipo: "clasificar",
+      enunciado: "En la tabla de la clase, este nivel se llama «Reactivo».",
+      correcta: "n1",
+      explicacion: "El nivel 1, reporting, es el reactivo.",
+      fuente: PPT },
+    { id: "m1-03", mision: "m1", concepto: "C", tipo: "clasificar",
+      enunciado: "Según la clase, aquí está entre el 70 y el 80 % de las empresas de Latinoamérica.",
+      correcta: "n1",
+      explicacion: "La mayoría de las empresas de la región está en el nivel 1, reporting.",
+      fuente: PPT },
+    { id: "m1-04", mision: "m1", concepto: "C", tipo: "clasificar",
+      enunciado: "Talento Humano entrega el número de retiros del mes pasado cuando alguien lo pide.",
+      correcta: "n1",
+      explicacion: "Contar lo que ya ocurrió, y solo cuando lo piden, es reporting: «¿qué pasó?».",
+      fuente: PPT + FICT },
+    { id: "m1-05", mision: "m1", concepto: "C", tipo: "clasificar",
+      enunciado: "Responde la pregunta: «¿Cómo estamos?»",
+      correcta: "n2",
+      explicacion: "El nivel 2, descriptivo, responde «¿cómo estamos?».",
+      fuente: PPT },
+    { id: "m1-06", mision: "m1", concepto: "C", tipo: "clasificar",
+      enunciado: "En la tabla de la clase, este nivel se llama «Dashboards».",
+      correcta: "n2",
+      explicacion: "El nivel 2, descriptivo, es el de los dashboards o tableros.",
+      fuente: PPT },
+    { id: "m1-07", mision: "m1", concepto: "C", tipo: "clasificar",
+      enunciado: "Aquí vive la «trampa del dashboard».",
+      correcta: "n2",
+      explicacion: "La «trampa del dashboard» es quedarse en el nivel 2: mostrar cómo estamos sin llegar al porqué.",
+      fuente: PPT },
+    { id: "m1-08", mision: "m1", concepto: "C", tipo: "clasificar",
+      enunciado: "El área tiene un tablero con la rotación por sede, pero nadie explica por qué cambia.",
+      correcta: "n2",
+      explicacion: "Un tablero que muestra el estado actual, sin explicar causas, es el nivel descriptivo.",
+      fuente: PPT + FICT },
+    { id: "m1-09", mision: "m1", concepto: "C", tipo: "clasificar",
+      enunciado: "Responde la pregunta: «¿Por qué pasa y qué podemos hacer?»",
+      correcta: "n3",
+      explicacion: "El nivel 3, estratégico, responde «¿por qué pasa y qué podemos hacer?».",
+      fuente: PPT },
+    { id: "m1-10", mision: "m1", concepto: "C", tipo: "clasificar",
+      enunciado: "En la tabla de la clase, este nivel se llama «Proactivo».",
+      correcta: "n3",
+      explicacion: "El nivel 3, estratégico, es el proactivo.",
+      fuente: PPT },
+    { id: "m1-11", mision: "m1", concepto: "C", tipo: "clasificar",
+      enunciado: "Es la meta realista para los próximos 12 a 18 meses.",
+      correcta: "n3",
+      explicacion: "Llegar al nivel 3, estratégico, es la meta realista a 12–18 meses.",
+      fuente: PPT },
+    { id: "m1-12", mision: "m1", concepto: "C", tipo: "clasificar",
+      enunciado: "El equipo analiza por qué renuncian más personas en una sede y propone acciones.",
+      correcta: "n3",
+      explicacion: "Buscar las causas y proponer qué hacer es el nivel estratégico.",
+      fuente: PPT + FICT },
+    { id: "m1-13", mision: "m1", concepto: "C", tipo: "clasificar",
+      enunciado: "Responde la pregunta: «¿Qué va a pasar y qué debo decidir ahora?»",
+      correcta: "n4",
+      explicacion: "El nivel 4, sistémico, responde «¿qué va a pasar y qué debo decidir ahora?».",
+      fuente: PPT },
+    { id: "m1-14", mision: "m1", concepto: "C", tipo: "clasificar",
+      enunciado: "En la tabla de la clase, este nivel se llama «Predictivo».",
+      correcta: "n4",
+      explicacion: "El nivel 4, sistémico, es el predictivo.",
+      fuente: PPT },
+    { id: "m1-15", mision: "m1", concepto: "C", tipo: "clasificar",
+      enunciado: "La clase lo describe como «la ventaja competitiva real».",
+      correcta: "n4",
+      explicacion: "El nivel 4, sistémico, es la ventaja competitiva real.",
+      fuente: PPT },
+    { id: "m1-16", mision: "m1", concepto: "C", tipo: "clasificar",
+      enunciado: "El equipo anticipa qué perfiles tienen mayor probabilidad de renunciar y decide hoy qué hacer.",
+      correcta: "n4",
+      explicacion: "Anticipar lo que va a pasar para decidir ahora es el nivel sistémico, predictivo.",
+      fuente: PPT + FICT },
+
+    /* ============ MISIÓN 2 · Cultura del dato o señal de alerta (B, G) ============ */
+    { id: "m2-01", mision: "m2", concepto: "B", tipo: "clasificar",
+      enunciado: "Hacer preguntas basadas en evidencia.",
+      correcta: "practica",
+      explicacion: "Es una de las cinco prácticas de la cultura del dato vistas en clase.",
+      fuente: PPT },
+    { id: "m2-02", mision: "m2", concepto: "B", tipo: "clasificar",
+      enunciado: "Compartir los datos y los resultados de forma transparente.",
+      correcta: "practica",
+      explicacion: "La transparencia con los datos y los resultados es una práctica de la cultura del dato.",
+      fuente: PPT },
+    { id: "m2-03", mision: "m2", concepto: "B", tipo: "clasificar",
+      enunciado: "Entrenar al equipo para interpretar e intervenir con base en datos.",
+      correcta: "practica",
+      explicacion: "La cultura del dato implica que todos sepan interpretar los datos con criterio.",
+      fuente: PPT },
+    { id: "m2-04", mision: "m2", concepto: "G", tipo: "clasificar",
+      enunciado: "Usar los datos para aprender.",
+      correcta: "practica",
+      explicacion: "«No uses los datos para culpar, sino para aprender.»",
+      fuente: PPT },
+    { id: "m2-05", mision: "m2", concepto: "G", tipo: "clasificar",
+      enunciado: "Cuidar la privacidad y la integridad de la información.",
+      correcta: "practica",
+      explicacion: "Cuidar la privacidad y la integridad de la información es una de las cinco prácticas.",
+      fuente: PPT },
+    { id: "m2-06", mision: "m2", concepto: "B", tipo: "clasificar",
+      enunciado: "Tomar las decisiones sobre personas desde la evidencia y la responsabilidad.",
+      correcta: "practica",
+      explicacion: "En Talento Humano, la cultura del dato significa decidir desde la evidencia y la responsabilidad.",
+      fuente: PPT },
+    { id: "m2-07", mision: "m2", concepto: "B", tipo: "clasificar",
+      enunciado: "Que líderes, analistas y gestores comprendan el valor de los datos y sepan interpretarlos con criterio.",
+      correcta: "practica",
+      explicacion: "La cultura del dato implica a todos: líderes, analistas y gestores.",
+      fuente: PPT },
+    { id: "m2-08", mision: "m2", concepto: "B", tipo: "clasificar",
+      enunciado: "Actuar con base en los datos para mejorar el bienestar, el desempeño y el desarrollo de las personas.",
+      correcta: "practica",
+      explicacion: "El propósito de la cultura del dato es mejorar el bienestar, el desempeño y el desarrollo de las personas.",
+      fuente: PPT },
+    { id: "m2-09", mision: "m2", concepto: "G", tipo: "clasificar", critico: true,
+      enunciado: "Usar los datos para culpar a una persona o a un equipo.",
+      correcta: "alerta",
+      explicacion: "Los datos no se usan para culpar, sino para aprender.",
+      fuente: PPT },
+    { id: "m2-10", mision: "m2", concepto: "G", tipo: "clasificar", critico: true,
+      enunciado: "Descuidar la privacidad de la información de las personas.",
+      correcta: "alerta",
+      explicacion: "La cultura del dato exige cuidar la privacidad y la integridad de la información.",
+      fuente: PPT },
+    { id: "m2-11", mision: "m2", concepto: "G", tipo: "clasificar", critico: true,
+      enunciado: "Utilizar los datos de las personas sin criterio ético.",
+      correcta: "alerta",
+      explicacion: "La cultura del dato implica utilizar los datos éticamente.",
+      fuente: PPT },
+    { id: "m2-12", mision: "m2", concepto: "B", tipo: "clasificar",
+      enunciado: "Decidir sobre las personas solo desde la intuición.",
+      correcta: "alerta",
+      explicacion: "Con cultura del dato, las decisiones sobre personas no se toman solo desde la intuición.",
+      fuente: PPT },
+    { id: "m2-13", mision: "m2", concepto: "B", tipo: "clasificar",
+      enunciado: "Decidir según quién tiene más jerarquía, sin mirar la evidencia.",
+      correcta: "alerta",
+      explicacion: "Con cultura del dato, la jerarquía no reemplaza la evidencia.",
+      fuente: PPT },
+    { id: "m2-14", mision: "m2", concepto: "B", tipo: "clasificar",
+      enunciado: "Decidir por la urgencia del momento, sin evidencia.",
+      correcta: "alerta",
+      explicacion: "Con cultura del dato, la urgencia no reemplaza la evidencia.",
+      fuente: PPT },
+    { id: "m2-15", mision: "m2", concepto: "B", tipo: "clasificar",
+      enunciado: "Sacar los datos sobre las personas solo cuando hay que justificar algo.",
+      correcta: "alerta",
+      explicacion: "La pregunta de la clase: ¿los datos se usan para aprender y decidir mejor, o solo aparecen cuando hay que justificar algo?",
+      fuente: PPT },
+    { id: "m2-16", mision: "m2", concepto: "B", tipo: "clasificar",
+      enunciado: "Guardarse los datos y los resultados para que nadie más los vea.",
+      correcta: "alerta",
+      explicacion: "La cultura del dato pide compartir los datos y los resultados de forma transparente.",
+      fuente: PPT },
+
+    /* ============ MISIÓN 3 · El equipo ideal (D) ============ */
+    { id: "m3-01", mision: "m3", concepto: "D", tipo: "clasificar",
+      enunciado: "Programación: lenguajes como Python, R o SQL para analizar datos.",
+      correcta: "datos",
+      explicacion: "La programación para analizar datos es una habilidad de la ciencia de datos.",
+      fuente: PPT },
+    { id: "m3-02", mision: "m3", concepto: "D", tipo: "clasificar",
+      enunciado: "Estadística: probabilidad, inferencia, regresiones y pruebas de hipótesis.",
+      correcta: "datos",
+      explicacion: "La estadística es una habilidad de la ciencia de datos.",
+      fuente: PPT },
+    { id: "m3-03", mision: "m3", concepto: "D", tipo: "clasificar",
+      enunciado: "Aprendizaje automático: modelos de aprendizaje supervisado y no supervisado.",
+      correcta: "datos",
+      explicacion: "Comprender y aplicar modelos de aprendizaje automático es ciencia de datos.",
+      fuente: PPT },
+    { id: "m3-04", mision: "m3", concepto: "D", tipo: "clasificar",
+      enunciado: "Visualización de datos: presentar los datos de manera fácilmente comprensible.",
+      correcta: "datos",
+      explicacion: "La visualización de datos hace parte de la ciencia de datos.",
+      fuente: PPT },
+    { id: "m3-05", mision: "m3", concepto: "D", tipo: "clasificar",
+      enunciado: "Limpieza y manipulación de datos: limpiar, transformar y preparar conjuntos de datos.",
+      correcta: "datos",
+      explicacion: "Preparar los datos para el análisis es una habilidad de la ciencia de datos.",
+      fuente: PPT },
+    { id: "m3-06", mision: "m3", concepto: "D", tipo: "clasificar",
+      enunciado: "Comunicación: explicar conceptos complejos a personas no técnicas y construir relaciones sólidas.",
+      correcta: "consultoria",
+      explicacion: "Las habilidades de comunicación hacen parte de la consultoría.",
+      fuente: PPT },
+    { id: "m3-07", mision: "m3", concepto: "D", tipo: "clasificar",
+      enunciado: "Gestión de proyectos: coordinar tareas, cumplir plazos, asignar recursos y manejar riesgos.",
+      correcta: "consultoria",
+      explicacion: "La gestión de proyectos hace parte de la consultoría.",
+      fuente: PPT },
+    { id: "m3-08", mision: "m3", concepto: "D", tipo: "clasificar",
+      enunciado: "Resolución de problemas: identificarlos, generar soluciones creativas y realistas, e implementarlas.",
+      correcta: "consultoria",
+      explicacion: "La resolución de problemas hace parte de la consultoría.",
+      fuente: PPT },
+    { id: "m3-09", mision: "m3", concepto: "D", tipo: "clasificar",
+      enunciado: "Pensamiento crítico: analizar información y usarla para tomar decisiones informadas.",
+      correcta: "consultoria",
+      explicacion: "El pensamiento crítico hace parte de la consultoría.",
+      fuente: PPT },
+    { id: "m3-10", mision: "m3", concepto: "D", tipo: "clasificar",
+      enunciado: "Habilidades de negocio: entender las metas y los desafíos del negocio y cómo resolverlos con análisis de personas.",
+      correcta: "consultoria",
+      explicacion: "Las habilidades de negocio hacen parte de la consultoría.",
+      fuente: PPT },
+    { id: "m3-11", mision: "m3", concepto: "D", tipo: "clasificar",
+      enunciado: "Psicología organizacional: comprender cómo se comportan las personas en el lugar de trabajo.",
+      correcta: "comportamiento",
+      explicacion: "La psicología organizacional hace parte de las ciencias del comportamiento.",
+      fuente: PPT },
+    { id: "m3-12", mision: "m3", concepto: "D", tipo: "clasificar",
+      enunciado: "Sociología: entender las dinámicas grupales e interpersonales en el entorno laboral.",
+      correcta: "comportamiento",
+      explicacion: "La sociología hace parte de las ciencias del comportamiento.",
+      fuente: PPT },
+    { id: "m3-13", mision: "m3", concepto: "D", tipo: "clasificar",
+      enunciado: "Diseño de encuestas: crear y administrar encuestas para recopilar datos relevantes.",
+      correcta: "comportamiento",
+      explicacion: "El diseño de encuestas hace parte de las ciencias del comportamiento.",
+      fuente: PPT },
+    { id: "m3-14", mision: "m3", concepto: "D", tipo: "clasificar",
+      enunciado: "Interpretación de datos cualitativos de entrevistas y grupos focales.",
+      correcta: "comportamiento",
+      explicacion: "Interpretar datos cualitativos de entrevistas y grupos focales hace parte de las ciencias del comportamiento.",
+      fuente: PPT },
+    { id: "m3-15", mision: "m3", concepto: "G", tipo: "clasificar",
+      enunciado: "Principios de ética: aplicar consideraciones éticas en todas las decisiones y acciones.",
+      correcta: "comportamiento",
+      explicacion: "En la clase, los principios de ética aparecen dentro de las ciencias del comportamiento.",
+      fuente: PPT },
+
+    /* ============ MISIÓN 4 · Las nueve dimensiones (E) ============ */
+    { id: "m4-01", mision: "m4", concepto: "E", tipo: "clasificar",
+      enunciado: "Gobernanza: los mecanismos, procesos y procedimientos con los que la empresa opera y gestiona el riesgo.",
+      correcta: "fundamentos",
+      explicacion: "La gobernanza es la dimensión uno y pertenece a los fundamentos.",
+      fuente: NUEVE },
+    { id: "m4-02", mision: "m4", concepto: "E", tipo: "clasificar",
+      enunciado: "Metodologías: los pasos para que el trabajo siga un camino claro y ágil.",
+      correcta: "fundamentos",
+      explicacion: "Las metodologías son la dimensión dos y pertenecen a los fundamentos.",
+      fuente: NUEVE },
+    { id: "m4-03", mision: "m4", concepto: "E", tipo: "clasificar",
+      enunciado: "Grupos de interés (stakeholders): involucrar a las personas, funciones y grupos más importantes.",
+      correcta: "fundamentos",
+      explicacion: "Los grupos de interés son la dimensión tres y pertenecen a los fundamentos.",
+      fuente: NUEVE },
+    { id: "m4-04", mision: "m4", concepto: "E", tipo: "clasificar",
+      enunciado: "Habilidades: las seis habilidades para el éxito en People Analytics.",
+      correcta: "recursos",
+      explicacion: "Los recursos son personas (o habilidades), tecnología y datos.",
+      fuente: NUEVE },
+    { id: "m4-05", mision: "m4", concepto: "E", tipo: "clasificar",
+      enunciado: "Tecnología: visualización, inteligencia de negocios, estadística, aprendizaje automático e IA.",
+      correcta: "recursos",
+      explicacion: "La tecnología es la dimensión cinco y pertenece a los recursos.",
+      fuente: NUEVE },
+    { id: "m4-06", mision: "m4", concepto: "E", tipo: "clasificar",
+      enunciado: "Datos: conocer, usar, integrar, gestionar y asegurar los datos de personas y de negocio.",
+      correcta: "recursos",
+      explicacion: "Los datos son la dimensión seis y pertenecen a los recursos.",
+      fuente: NUEVE },
+    { id: "m4-07", mision: "m4", concepto: "E", tipo: "clasificar",
+      enunciado: "Experiencias de la fuerza laboral: analítica enfocada en empleados y jefes, con personalización y datos al alcance de los jefes.",
+      correcta: "valor",
+      explicacion: "Las experiencias de la fuerza laboral son la dimensión siete y pertenecen al valor.",
+      fuente: NUEVE },
+    { id: "m4-08", mision: "m4", concepto: "E", tipo: "clasificar",
+      enunciado: "Resultados de negocio: hallazgos para que ejecutivos y líderes tomen decisiones.",
+      correcta: "valor",
+      explicacion: "Los resultados de negocio son la dimensión ocho y pertenecen al valor.",
+      fuente: NUEVE },
+    { id: "m4-09", mision: "m4", concepto: "E", tipo: "clasificar",
+      enunciado: "Cultura: una organización receptiva a los hallazgos analíticos.",
+      correcta: "valor",
+      explicacion: "La cultura es la dimensión nueve y pertenece al valor.",
+      fuente: NUEVE },
+    { id: "m4-10", mision: "m4", concepto: "E", tipo: "opcion",
+      enunciado: "¿Cuáles son los dos focos principales de la gobernanza?",
+      opciones: [
+        { id: "a", texto: "Estructuras para estándares de datos, ética y privacidad, y para seleccionar los proyectos de analítica" },
+        { id: "b", texto: "Comprar tecnología y contratar científicos de datos" },
+        { id: "c", texto: "Hacer más tableros y más informes" },
+        { id: "d", texto: "Reducir costos y aumentar ingresos" }
+      ],
+      correcta: "a",
+      explicacion: "La gobernanza pone estructuras para los estándares de datos, la ética y la privacidad, y para gestionar la selección de proyectos.",
+      fuente: NUEVE },
+    { id: "m4-11", mision: "m4", concepto: "E", tipo: "opcion",
+      enunciado: "Según el modelo, ¿qué pasa cuando no hay una gobernanza adecuada?",
+      opciones: [
+        { id: "a", texto: "El trabajo de analítica pierde foco, valor e impacto, y aumenta el riesgo de hacer trabajo innecesario" },
+        { id: "b", texto: "El equipo trabaja más rápido" },
+        { id: "c", texto: "La tecnología se vuelve más barata" },
+        { id: "d", texto: "No pasa nada: la gobernanza es opcional" }
+      ],
+      correcta: "a",
+      explicacion: "Sin gobernanza, la analítica pierde foco, valor e impacto y crece el riesgo de hacer trabajo innecesario.",
+      fuente: NUEVE },
+    { id: "m4-12", mision: "m4", concepto: "E", tipo: "opcion",
+      enunciado: "¿Por dónde empieza siempre un People Analytics exitoso?",
+      opciones: [
+        { id: "a", texto: "Por entender los retos de negocio más importantes" },
+        { id: "b", texto: "Por comprar la herramienta más nueva" },
+        { id: "c", texto: "Por reunir todos los datos disponibles" },
+        { id: "d", texto: "Por contratar un equipo grande" }
+      ],
+      correcta: "a",
+      explicacion: "La recomendación del modelo es: «¡Enfócate primero en tus retos de negocio!».",
+      fuente: NUEVE },
+    { id: "m4-13", mision: "m4", concepto: "E", tipo: "opcion",
+      enunciado: "¿Cuántos tipos de grupos de interés (stakeholders) contempla el modelo?",
+      opciones: [
+        { id: "a", texto: "Siete" },
+        { id: "b", texto: "Tres" },
+        { id: "c", texto: "Nueve" },
+        { id: "d", texto: "Dos" }
+      ],
+      correcta: "a",
+      explicacion: "Son siete: ejecutivos de negocio, líderes de RR. HH., jefes, empleados y trabajadores, áreas funcionales, dueños de tecnología y datos, y sindicatos o grupos de empleados.",
+      fuente: NUEVE },
+    { id: "m4-14", mision: "m4", concepto: "E", tipo: "opcion",
+      enunciado: "¿Cuál de estas NO es una de las seis habilidades para el éxito del modelo?",
+      opciones: [
+        { id: "a", texto: "Diseño gráfico" },
+        { id: "b", texto: "Visión de negocio" },
+        { id: "c", texto: "Psicología del trabajo" },
+        { id: "d", texto: "Ciencia de datos" }
+      ],
+      correcta: "a",
+      explicacion: "Las seis son: visión de negocio, consultoría, recursos humanos, psicología del trabajo, ciencia de datos y comunicación.",
+      fuente: NUEVE },
+    { id: "m4-15", mision: "m4", concepto: "E", tipo: "opcion",
+      enunciado: "Hay miles de proveedores de tecnología. ¿Qué recomienda el modelo?",
+      opciones: [
+        { id: "a", texto: "Entender qué necesitas frente al problema de negocio que quieres resolver" },
+        { id: "b", texto: "Ir por «la próxima novedad brillante»" },
+        { id: "c", texto: "Elegir siempre la opción más costosa" },
+        { id: "d", texto: "Esperar a que el mercado se estabilice" }
+      ],
+      correcta: "a",
+      explicacion: "La recomendación es partir de las necesidades y del problema de negocio, en lugar de enfocarse en «la próxima novedad brillante».",
+      fuente: NUEVE },
+    { id: "m4-16", mision: "m4", concepto: "E", tipo: "opcion",
+      enunciado: "«El modelo de las nueve dimensiones es secuencial: hay que completar una dimensión antes de pasar a la siguiente.»",
+      opciones: SI_NO,
+      correcta: "no",
+      explicacion: "No es un modelo secuencial: no exige un orden, y las organizaciones con más impacto trabajan las tres categorías al mismo tiempo.",
+      fuente: NUEVE },
+    { id: "m4-17", mision: "m4", concepto: "E", tipo: "opcion",
+      enunciado: "¿Qué tres temas se repiten en casi todas las organizaciones que hacen People Analytics?",
+      opciones: [
+        { id: "a", texto: "Impacto, valor y foco" },
+        { id: "b", texto: "Costo, tiempo y alcance" },
+        { id: "c", texto: "Datos, tableros e informes" },
+        { id: "d", texto: "Personas, procesos y premios" }
+      ],
+      correcta: "a",
+      explicacion: "Los tres temas son impacto, valor y foco: cómo mejorar mi impacto, cómo crear más valor y en qué enfocarme.",
+      fuente: NUEVE },
+    { id: "m4-18", mision: "m4", concepto: "E", tipo: "opcion",
+      enunciado: "En la dimensión de resultados de negocio, ¿sobre qué pueden tratar los hallazgos?",
+      opciones: [
+        { id: "a", texto: "Productividad, optimización de costos o aumento de ingresos" },
+        { id: "b", texto: "Solo el número de empleados" },
+        { id: "c", texto: "El color de los tableros" },
+        { id: "d", texto: "La cantidad de proveedores de tecnología" }
+      ],
+      correcta: "a",
+      explicacion: "Los hallazgos pueden tratar de productividad, optimización de costos o aumento de ingresos.",
+      fuente: NUEVE },
+    { id: "m4-19", mision: "m4", concepto: "E", tipo: "opcion",
+      enunciado: "Según el modelo, ¿para quién debe crear valor la analítica?",
+      opciones: [
+        { id: "a", texto: "Para el negocio y para los empleados" },
+        { id: "b", texto: "Solo para el área de RR. HH." },
+        { id: "c", texto: "Solo para los proveedores de tecnología" },
+        { id: "d", texto: "Para el equipo de analítica" }
+      ],
+      correcta: "a",
+      explicacion: "El fin no es la actividad de analítica en sí: es crear valor tanto para el negocio como para los empleados.",
+      fuente: NUEVE },
+    { id: "m4-20", mision: "m4", concepto: "E", tipo: "opcion",
+      enunciado: "Según la dimensión de cultura, ¿cuándo es más fácil y tiene más impacto desplegar la analítica?",
+      opciones: [
+        { id: "a", texto: "Cuando la cultura de RR. HH. y de la organización es receptiva a los hallazgos analíticos" },
+        { id: "b", texto: "Cuando solo el equipo de analítica ve los datos" },
+        { id: "c", texto: "Cuando se evita capacitar a los socios de negocio de RR. HH." },
+        { id: "d", texto: "Cuando hay más proveedores" }
+      ],
+      correcta: "a",
+      explicacion: "Desplegar la analítica es más fácil y tiene más impacto cuando la cultura es receptiva a los hallazgos.",
+      fuente: NUEVE },
+
+    /* ============ MISIÓN 5 · De la intuición a la evidencia (A, C, F, G) ============ */
+    { id: "m5-01", mision: "m5", concepto: "A", tipo: "multi",
+      enunciado: "People Analytics es el proceso de… ¿qué se hace con los datos relacionados con las personas? Marca todas las que apliquen.",
+      opciones: [
+        { id: "a", texto: "Recopilar" },
+        { id: "b", texto: "Organizar" },
+        { id: "c", texto: "Analizar" },
+        { id: "d", texto: "Interpretar" },
+        { id: "e", texto: "Adivinar" },
+        { id: "f", texto: "Esconder" }
+      ],
+      correcta: ["a", "b", "c", "d"],
+      explicacion: "Es el proceso de recopilar, organizar, analizar e interpretar datos relacionados con las personas para tomar decisiones más informadas y estratégicas.",
+      fuente: PPT },
+    { id: "m5-02", mision: "m5", concepto: "A", tipo: "opcion",
+      enunciado: "«No se trata solo de números, sino de convertir datos en…»",
+      opciones: [
+        { id: "a", texto: "…conocimiento accionable" },
+        { id: "b", texto: "…más informes" },
+        { id: "c", texto: "…tableros llamativos" },
+        { id: "d", texto: "…argumentos para justificar decisiones" }
+      ],
+      correcta: "a",
+      explicacion: "Se trata de convertir datos en conocimiento accionable que ayude a comprender patrones, predecir comportamientos y mejorar procesos.",
+      fuente: PPT },
+    { id: "m5-03", mision: "m5", concepto: "A", tipo: "opcion",
+      enunciado: "¿Cuál de estas preguntas es un ejemplo de lo que responde People Analytics?",
+      opciones: [
+        { id: "a", texto: "¿Qué perfiles tienen mayor probabilidad de permanecer o renunciar?" },
+        { id: "b", texto: "¿Cuál es el logo más bonito para el área?" },
+        { id: "c", texto: "¿Qué proveedor tiene la herramienta más nueva?" },
+        { id: "d", texto: "¿Quién tiene la culpa de la rotación?" }
+      ],
+      correcta: "a",
+      explicacion: "Es una de las tres preguntas de ejemplo de la clase, junto con qué afecta la productividad de ciertos equipos y qué competencias crecen o disminuyen.",
+      fuente: PPT },
+    { id: "m5-04", mision: "m5", concepto: "A", tipo: "opcion",
+      enunciado: "¿Con qué fin se analizan los datos relacionados con las personas?",
+      opciones: [
+        { id: "a", texto: "Tomar decisiones más informadas y estratégicas en la gestión del talento humano" },
+        { id: "b", texto: "Tener más archivos guardados" },
+        { id: "c", texto: "Reemplazar a los líderes" },
+        { id: "d", texto: "Vigilar a cada empleado" }
+      ],
+      correcta: "a",
+      explicacion: "El fin es tomar decisiones más informadas y estratégicas en la gestión del talento humano.",
+      fuente: PPT },
+    { id: "m5-05", mision: "m5", concepto: "G", tipo: "opcion",
+      enunciado: "Caso de Juan: la alta dirección decide reducir los costos operativos en un 20 % evaluando la automatización. ¿Qué le preocupa a Juan?",
+      opciones: [
+        { id: "a", texto: "Cómo se tomarán esas decisiones" },
+        { id: "b", texto: "Que la automatización sea imposible" },
+        { id: "c", texto: "Que no conoce a su gente" },
+        { id: "d", texto: "Que la empresa tiene muy pocos empleados" }
+      ],
+      correcta: "a",
+      explicacion: "Juan entiende la necesidad del cambio; lo que le preocupa es cómo se tomarán esas decisiones.",
+      fuente: PPT },
+    { id: "m5-06", mision: "m5", concepto: "G", tipo: "opcion", critico: true,
+      enunciado: "Caso de Juan: ¿qué criterio teme Juan que sea el único para decidir?",
+      opciones: [
+        { id: "a", texto: "El costo salarial" },
+        { id: "b", texto: "El desempeño" },
+        { id: "c", texto: "El potencial" },
+        { id: "d", texto: "La adaptabilidad" }
+      ],
+      correcta: "a",
+      explicacion: "Juan se pregunta: «¿Solo por costo salarial?». Una decisión tan sensible necesita más información que esa.",
+      fuente: PPT },
+    { id: "m5-07", mision: "m5", concepto: "G", tipo: "opcion",
+      enunciado: "Caso de Juan: ¿qué datos echa de menos para tomar la decisión?",
+      opciones: [
+        { id: "a", texto: "Desempeño, adaptabilidad o potencial de los colaboradores" },
+        { id: "b", texto: "El precio de las herramientas de automatización" },
+        { id: "c", texto: "El número de sedes de la empresa" },
+        { id: "d", texto: "Los salarios de la alta dirección" }
+      ],
+      correcta: "a",
+      explicacion: "Juan se pregunta dónde están los datos sobre desempeño, adaptabilidad o potencial de los colaboradores.",
+      fuente: PPT },
+    { id: "m5-08", mision: "m5", concepto: "F", tipo: "opcion",
+      enunciado: "Según la lectura de Josh Bersin Company, ¿en qué se enfocaba RR. HH. cuando su función era principalmente administrativa?",
+      opciones: [
+        { id: "a", texto: "En estadísticas simples: cuántos empleados hay, la rotación por región, el gasto en formación" },
+        { id: "b", texto: "En modelos predictivos integrados" },
+        { id: "c", texto: "En plataformas con lenguaje común" },
+        { id: "d", texto: "En la efectividad de cada programa" }
+      ],
+      correcta: "a",
+      explicacion: "RR. HH. cumplía una función administrativa y se enfocaba en estadísticas simples.",
+      fuente: SIS },
+    { id: "m5-09", mision: "m5", concepto: "F", tipo: "opcion",
+      enunciado: "Según la lectura, hoy quienes gestionan la formación ya no solo reportan el costo de sus programas. ¿Qué necesitan mostrar?",
+      opciones: [
+        { id: "a", texto: "La efectividad de la formación para la organización" },
+        { id: "b", texto: "La lista de asistentes" },
+        { id: "c", texto: "El número de cursos del catálogo" },
+        { id: "d", texto: "El salón en el que se dictó" }
+      ],
+      correcta: "a",
+      explicacion: "Ya no basta con reportar el costo: hay que cuantificar la efectividad de la formación.",
+      fuente: SIS },
+    { id: "m5-10", mision: "m5", concepto: "F", tipo: "opcion",
+      enunciado: "Hay un equipo de analítica para aprendizaje, otro para selección y otro para compensación. Según la lectura, ¿cuál es el problema?",
+      opciones: [
+        { id: "a", texto: "Los datos de talento quedan en silos por grupos operativos" },
+        { id: "b", texto: "Hay demasiados datos integrados" },
+        { id: "c", texto: "Los equipos comparten un lenguaje común" },
+        { id: "d", texto: "Ninguno: así RR. HH. tiene éxito" }
+      ],
+      correcta: "a",
+      explicacion: "La lectura pregunta si RR. HH. puede tener éxito con los datos de talento en silos, y responde: no puede.",
+      fuente: SIS },
+    { id: "m5-11", mision: "m5", concepto: "F", tipo: "opcion",
+      enunciado: "Según la lectura, ¿qué necesitan hoy los equipos de RR. HH.?",
+      opciones: [
+        { id: "a", texto: "Una plataforma integrada que una las fuentes de información y cree un lenguaje común" },
+        { id: "b", texto: "Un equipo de analítica distinto para cada proceso" },
+        { id: "c", texto: "Volver a las estadísticas simples" },
+        { id: "d", texto: "Reportar solo el costo de los programas" }
+      ],
+      correcta: "a",
+      explicacion: "Se necesita una plataforma integrada que reúna las distintas fuentes y cree un lenguaje común para los líderes de todo el negocio.",
+      fuente: SIS },
+    { id: "m5-12", mision: "m5", concepto: "F", tipo: "opcion",
+      enunciado: "¿Cuál de estos equipos de analítica independientes NO se menciona en la lectura?",
+      opciones: [
+        { id: "a", texto: "Un equipo que mide la satisfacción de los clientes" },
+        { id: "b", texto: "Un equipo que mide las operaciones de aprendizaje y desarrollo" },
+        { id: "c", texto: "Un equipo que mira las métricas de selección" },
+        { id: "d", texto: "Un equipo que mira pagos, beneficios y equidad salarial" }
+      ],
+      correcta: "a",
+      explicacion: "La lectura menciona tres: aprendizaje y desarrollo, selección, y compensación con equidad salarial.",
+      fuente: SIS },
+    { id: "m5-13", mision: "m5", concepto: "C", tipo: "ordenar",
+      enunciado: "Ordena los niveles de madurez analítica, del 1 al 4.",
+      opciones: [
+        { id: "a", texto: "Reporting: ¿qué pasó?" },
+        { id: "b", texto: "Descriptivo: ¿cómo estamos?" },
+        { id: "c", texto: "Estratégico: ¿por qué pasa y qué podemos hacer?" },
+        { id: "d", texto: "Sistémico: ¿qué va a pasar y qué debo decidir ahora?" }
+      ],
+      correcta: ["a", "b", "c", "d"],
+      explicacion: "Reporting → descriptivo → estratégico → sistémico.",
+      fuente: PPT },
+
+    /* ============ MISIÓN 6 · Sala de decisiones (A–G) ============ */
+    { id: "m6-01", mision: "m6", concepto: "A", tipo: "opcion",
+      enunciado: "¿Con qué otro nombre se conoce a People Analytics?",
+      opciones: [
+        { id: "a", texto: "HR Analytics" },
+        { id: "b", texto: "Marketing Analytics" },
+        { id: "c", texto: "Nómina electrónica" },
+        { id: "d", texto: "Reporting básico" }
+      ],
+      correcta: "a",
+      explicacion: "También se conoce como HR Analytics o talento basado en datos.",
+      fuente: PPT, pista: "Lleva las siglas de recursos humanos en inglés." },
+    { id: "m6-02", mision: "m6", concepto: "A", tipo: "opcion",
+      enunciado: "Completa el lema de la clase: «De la intuición…»",
+      opciones: [
+        { id: "a", texto: "…al análisis estratégico" },
+        { id: "b", texto: "…a la urgencia" },
+        { id: "c", texto: "…a la jerarquía" },
+        { id: "d", texto: "…al tablero más grande" }
+      ],
+      correcta: "a",
+      explicacion: "«De la intuición al análisis estratégico.»",
+      fuente: PPT, pista: "Termina en una palabra que empieza por «e»." },
+    { id: "m6-03", mision: "m6", concepto: "B", tipo: "opcion",
+      enunciado: "¿Qué es la cultura del dato?",
+      opciones: [
+        { id: "a", texto: "La mentalidad colectiva que valora, confía y usa los datos como base para decidir" },
+        { id: "b", texto: "Un programa para hacer tableros" },
+        { id: "c", texto: "El área que guarda las bases de datos" },
+        { id: "d", texto: "Una norma que obliga a medirlo todo" }
+      ],
+      correcta: "a",
+      explicacion: "Es la mentalidad colectiva dentro de una organización que valora, confía y usa los datos como base para la toma de decisiones.",
+      fuente: PPT, pista: "No es una herramienta: es una mentalidad." },
+    { id: "m6-04", mision: "m6", concepto: "B", tipo: "opcion",
+      enunciado: "Con cultura del dato, las decisiones sobre personas se toman desde…",
+      opciones: [
+        { id: "a", texto: "La evidencia y la responsabilidad" },
+        { id: "b", texto: "La intuición" },
+        { id: "c", texto: "La jerarquía" },
+        { id: "d", texto: "La urgencia" }
+      ],
+      correcta: "a",
+      explicacion: "No solo desde la intuición, la jerarquía o la urgencia, sino desde la evidencia y la responsabilidad.",
+      fuente: PPT, pista: "Dos palabras: una empieza por «e» y otra por «r»." },
+    { id: "m6-05", mision: "m6", concepto: "C", tipo: "opcion",
+      enunciado: "¿En qué nivel de madurez analítica está la mayoría de las empresas de Latinoamérica?",
+      opciones: [
+        { id: "a", texto: "1 · Reporting" },
+        { id: "b", texto: "2 · Descriptivo" },
+        { id: "c", texto: "3 · Estratégico" },
+        { id: "d", texto: "4 · Sistémico" }
+      ],
+      correcta: "a",
+      explicacion: "Entre el 70 y el 80 % de las empresas de la región está en el nivel 1, reporting.",
+      fuente: PPT, pista: "El nivel reactivo." },
+    { id: "m6-06", mision: "m6", concepto: "C", tipo: "opcion",
+      enunciado: "Sobre los niveles de madurez: «La diferencia no es técnica — es una diferencia de…»",
+      opciones: [
+        { id: "a", texto: "…mentalidad y de impacto en el negocio" },
+        { id: "b", texto: "…presupuesto y de herramientas" },
+        { id: "c", texto: "…tamaño de la empresa" },
+        { id: "d", texto: "…cantidad de datos" }
+      ],
+      correcta: "a",
+      explicacion: "«La diferencia no es técnica — es una diferencia de mentalidad y de impacto en el negocio.»",
+      fuente: PPT, pista: "Tiene que ver con cómo se piensa." },
+    { id: "m6-07", mision: "m6", concepto: "C", tipo: "opcion",
+      enunciado: "¿Qué pregunta responde el nivel 4, sistémico?",
+      opciones: [
+        { id: "a", texto: "¿Qué va a pasar y qué debo decidir ahora?" },
+        { id: "b", texto: "¿Qué pasó?" },
+        { id: "c", texto: "¿Cómo estamos?" },
+        { id: "d", texto: "¿Por qué pasa y qué podemos hacer?" }
+      ],
+      correcta: "a",
+      explicacion: "El nivel 4 es predictivo: «¿qué va a pasar y qué debo decidir ahora?».",
+      fuente: PPT, pista: "Mira hacia el futuro." },
+    { id: "m6-08", mision: "m6", concepto: "D", tipo: "opcion",
+      enunciado: "¿Cuál de estas NO es una de las cuatro áreas de habilidades clave en People Analytics?",
+      opciones: [
+        { id: "a", texto: "Contabilidad" },
+        { id: "b", texto: "Ciencia de datos" },
+        { id: "c", texto: "Mentalidad de producto" },
+        { id: "d", texto: "Ciencias del comportamiento" }
+      ],
+      correcta: "a",
+      explicacion: "Las cuatro áreas son: ciencia de datos, consultoría, mentalidad de producto y ciencias del comportamiento.",
+      fuente: PPT, pista: "La cuarta área es consultoría." },
+    { id: "m6-09", mision: "m6", concepto: "D", tipo: "opcion",
+      enunciado: "Python, R y SQL son habilidades de…",
+      opciones: [
+        { id: "a", texto: "Ciencia de datos" },
+        { id: "b", texto: "Consultoría" },
+        { id: "c", texto: "Ciencias del comportamiento" },
+        { id: "d", texto: "Mentalidad de producto" }
+      ],
+      correcta: "a",
+      explicacion: "La programación en lenguajes como Python, R o SQL hace parte de la ciencia de datos.",
+      fuente: PPT, pista: "Son lenguajes para analizar datos." },
+    { id: "m6-10", mision: "m6", concepto: "D", tipo: "opcion",
+      enunciado: "¿Qué estudian las ciencias del comportamiento?",
+      opciones: [
+        { id: "a", texto: "Cómo se comportan realmente las personas, cómo deciden y cómo responden a programas, políticas e incentivos" },
+        { id: "b", texto: "Cómo programar modelos de aprendizaje automático" },
+        { id: "c", texto: "Cómo asignar los recursos de un proyecto" },
+        { id: "d", texto: "Cómo limpiar bases de datos" }
+      ],
+      correcta: "a",
+      explicacion: "Dan un entendimiento basado en evidencia de cómo realmente se comportan las personas y de qué intervenciones funcionan.",
+      fuente: PPT, pista: "Su centro son las personas, no los datos." },
+    { id: "m6-11", mision: "m6", concepto: "E", tipo: "opcion",
+      enunciado: "¿En qué tres categorías se agrupan las nueve dimensiones?",
+      opciones: [
+        { id: "a", texto: "Fundamentos, recursos y valor" },
+        { id: "b", texto: "Pasado, presente y futuro" },
+        { id: "c", texto: "Datos, tableros y modelos" },
+        { id: "d", texto: "Selección, formación y compensación" }
+      ],
+      correcta: "a",
+      explicacion: "Construir fundamentos, gestionar recursos y entregar valor.",
+      fuente: NUEVE, pista: "La primera es la base; la última, lo que se entrega." },
+    { id: "m6-12", mision: "m6", concepto: "E", tipo: "opcion",
+      enunciado: "¿Cuál es la recomendación número uno del modelo para un líder de RR. HH. que empieza con analítica?",
+      opciones: [
+        { id: "a", texto: "Enfocarse primero en los retos de negocio" },
+        { id: "b", texto: "Comprar tecnología" },
+        { id: "c", texto: "Contratar científicos de datos" },
+        { id: "d", texto: "Hacer un tablero" }
+      ],
+      correcta: "a",
+      explicacion: "«¡Enfócate primero en tus retos de negocio!»",
+      fuente: NUEVE, pista: "Primero el porqué." },
+    { id: "m6-13", mision: "m6", concepto: "F", tipo: "opcion",
+      enunciado: "¿Puede RR. HH. tener éxito si los datos de talento están en silos por grupos operativos?",
+      opciones: [
+        { id: "a", texto: "No: necesita una plataforma integrada y un lenguaje común" },
+        { id: "b", texto: "Sí: cada equipo debe cuidar sus datos" },
+        { id: "c", texto: "Sí, si cada silo tiene su tablero" },
+        { id: "d", texto: "Depende del tamaño de la empresa" }
+      ],
+      correcta: "a",
+      explicacion: "La lectura responde que no puede: hace falta un enfoque sistémico que integre las fuentes.",
+      fuente: SIS, pista: "Los silos no conversan entre sí." },
+    { id: "m6-14", mision: "m6", concepto: "F", tipo: "opcion",
+      enunciado: "¿Qué crea una plataforma integrada para los líderes de todo el negocio?",
+      opciones: [
+        { id: "a", texto: "Un lenguaje común" },
+        { id: "b", texto: "Más silos" },
+        { id: "c", texto: "Más equipos independientes" },
+        { id: "d", texto: "Más estadísticas simples" }
+      ],
+      correcta: "a",
+      explicacion: "Una plataforma integrada reúne las fuentes de información y crea un lenguaje común.",
+      fuente: SIS, pista: "Sirve para que todos se entiendan." },
+    { id: "m6-15", mision: "m6", concepto: "G", tipo: "opcion", critico: true,
+      enunciado: "Completa: «No uses los datos para culpar, sino para…»",
+      opciones: [
+        { id: "a", texto: "…aprender" },
+        { id: "b", texto: "…castigar" },
+        { id: "c", texto: "…justificar" },
+        { id: "d", texto: "…comparar personas" }
+      ],
+      correcta: "a",
+      explicacion: "«No uses los datos para culpar, sino para aprender.»",
+      fuente: PPT, pista: "Lo que se hace en una clase." },
+    { id: "m6-16", mision: "m6", concepto: "G", tipo: "opcion", critico: true,
+      enunciado: "Vas a analizar datos de las personas de tu organización. ¿Qué debes cuidar siempre?",
+      opciones: [
+        { id: "a", texto: "La privacidad y la integridad de la información" },
+        { id: "b", texto: "Que el tablero tenga muchos colores" },
+        { id: "c", texto: "Que nadie más vea los resultados" },
+        { id: "d", texto: "Que los datos confirmen lo que ya se decidió" }
+      ],
+      correcta: "a",
+      explicacion: "Cuidar la privacidad y la integridad de la información es una práctica de la cultura del dato.",
+      fuente: PPT, pista: "Es una de las cinco prácticas de la cultura del dato." }
+  ];
+
+  /* Nombres de los conceptos (pantalla de resultados finales) */
+  var conceptos = {
+    A: "Qué es People Analytics",
+    B: "Cultura del dato en Talento Humano",
+    C: "Los 4 niveles de madurez analítica",
+    D: "Habilidades clave en People Analytics",
+    E: "Las nueve dimensiones de Insight222",
+    F: "Enfoque sistémico: de los silos a la integración",
+    G: "Decidir con evidencia, ética y responsabilidad"
+  };
+
+  /* PIN del botón «Facilitador» del pie de página. Cámbialo si quieres.
+     No es una medida de seguridad: solo evita activarlo por accidente. */
+  var facilitador = { pin: "3003" };
+
+  var BANCO = { version: 1, juego: juego, misiones: misiones, items: items, conceptos: conceptos, facilitador: facilitador };
+
+  if (typeof module !== "undefined" && module.exports) { module.exports = BANCO; }
+  raiz.AA_BANCO = BANCO;
+})(typeof window !== "undefined" ? window : globalThis);
+
+</script>
+  <script>
+/*
+ * MOTOR — EAFIT People Analytics Lab
+ * Lógica pura del juego (sin pantalla): selección de ítems, turnos,
+ * puntaje, rachas, alertas de riesgo, desbloqueo de misiones y progreso.
+ * No depende del navegador, así que también se prueba con Node.
+ */
+(function (raiz) {
+  "use strict";
+
+  var PUNTOS_BASE = 100;      // por respuesta correcta
+  var BONO_RACHA = 20;        // por cada acierto seguido adicional
+  var BONO_RACHA_MAX = 100;
+  var ALERTAS = 3;            // "alertas de riesgo" por misión (compartidas por la sala)
+  var UMBRAL_INSIGNIA = 0.7;  // 70 % de aciertos para ganar la insignia
+  var UMBRAL_DOMINIO = 0.7;   // 70 % para dar un concepto por dominado
+  var CLAVE = "eafit-people-analytics-lab-v1";
+
+  /* ---------- utilidades ---------- */
+  function barajar(lista, rng) {
+    var a = lista.slice();
+    for (var i = a.length - 1; i > 0; i--) {
+      var j = Math.floor(rng() * (i + 1));
+      var t = a[i]; a[i] = a[j]; a[j] = t;
+    }
+    return a;
+  }
+
+  function mision(banco, id) {
+    for (var i = 0; i < banco.misiones.length; i++) {
+      if (banco.misiones[i].id === id) { return banco.misiones[i]; }
+    }
+    return null;
+  }
+
+  function indiceMision(banco, id) {
+    for (var i = 0; i < banco.misiones.length; i++) { if (banco.misiones[i].id === id) { return i; } }
+    return -1;
+  }
+
+  function itemsDe(banco, misionId) {
+    return banco.items.filter(function (it) { return it.mision === misionId; });
+  }
+
+  /* ---------- selección de ítems para una partida ---------- */
+  function seleccionar(banco, misionId, rng) {
+    var m = mision(banco, misionId);
+    var todos = itemsDe(banco, misionId);
+    var sel = m.seleccion || { todas: true };
+    var salida = [];
+
+    if (sel.porCategoria) {
+      // misma cantidad de ítems por cada categoría (misión 1)
+      m.categorias.forEach(function (c) {
+        var grupo = todos.filter(function (it) { return it.correcta === c.id; });
+        salida = salida.concat(barajar(grupo, rng).slice(0, sel.porCategoria));
+      });
+      return barajar(salida, rng);
+    }
+
+    if (sel.grupos) {
+      // un caso completo (grupo) y luego preguntas sueltas (misión 2)
+      var nombres = [];
+      todos.forEach(function (it) {
+        if (it.grupo && nombres.indexOf(it.grupo) < 0) { nombres.push(it.grupo); }
+      });
+      barajar(nombres, rng).slice(0, sel.grupos).forEach(function (g) {
+        salida = salida.concat(barajar(todos.filter(function (it) { return it.grupo === g; }), rng));
+      });
+      var sueltas = todos.filter(function (it) { return !it.grupo; });
+      return salida.concat(barajar(sueltas, rng).slice(0, sel.sueltas || sueltas.length));
+    }
+
+    if (sel.cantidad) { return barajar(todos, rng).slice(0, sel.cantidad); }
+    return todos.slice(); // todas, en el orden del banco (misión 4)
+  }
+
+  /* ---------- partida ----------
+     cfg.jugadores: 1 (individual) o 2–3 (equipos por turnos)
+     cfg.inicio:    quién responde el primer reto (rota de misión en misión) */
+  function crearPartida(banco, misionId, rng, cfg) {
+    rng = rng || Math.random;
+    cfg = cfg || {};
+    var n = Math.max(1, cfg.jugadores || 1);
+    var m = mision(banco, misionId);
+    var items = seleccionar(banco, misionId, rng);
+    // Por equipos, todos reciben la misma cantidad de turnos
+    // (salvo en las misiones que juegan el banco completo, como la 4).
+    if (n > 1 && !(m.seleccion && m.seleccion.todas)) {
+      items = items.slice(0, items.length - (items.length % n));
+    }
+    var jugadores = [];
+    for (var i = 0; i < n; i++) { jugadores.push({ puntos: 0, racha: 0, mejorRacha: 0, aciertos: 0, total: 0 }); }
+    return {
+      misionId: misionId,
+      items: items,
+      indice: 0,
+      jugadores: jugadores,
+      inicio: (cfg.inicio || 0) % n,
+      alertas: ALERTAS,
+      comodines: { mitad: true, pista: true },   // reto final
+      respuestas: [],   // { id, concepto, correcta, critico, omitida, jugador }
+      terminada: false,
+      porAlertas: false
+    };
+  }
+
+  function itemActual(p) { return p.terminada ? null : p.items[p.indice]; }
+  function turno(p) { return (p.inicio + p.indice) % p.jugadores.length; }
+
+  function igualLista(a, b, ordenImporta) {
+    if (!Array.isArray(a) || !Array.isArray(b) || a.length !== b.length) { return false; }
+    var x = ordenImporta ? a : a.slice().sort();
+    var y = ordenImporta ? b : b.slice().sort();
+    for (var i = 0; i < x.length; i++) { if (x[i] !== y[i]) { return false; } }
+    return true;
+  }
+
+  function esCorrecta(item, respuesta) {
+    if (item.tipo === "multi") { return igualLista(respuesta, item.correcta, false); }
+    if (item.tipo === "ordenar") { return igualLista(respuesta, item.correcta, true); }
+    return respuesta === item.correcta;
+  }
+
+  function avanzar(p) {
+    p.indice += 1;
+    if (p.indice >= p.items.length || p.alertas <= 0) {
+      p.terminada = true;
+      p.porAlertas = p.alertas <= 0 && p.indice < p.items.length;
+    }
+  }
+
+  /* Registra la respuesta al ítem actual (null = se acabó el tiempo). */
+  function responder(p, respuesta) {
+    var item = itemActual(p);
+    if (!item) { return null; }
+    var quien = turno(p);
+    var j = p.jugadores[quien];
+    var ok = esCorrecta(item, respuesta);
+    var ganados = 0;
+    var alerta = false;
+
+    j.total += 1;
+    if (ok) {
+      j.aciertos += 1;
+      j.racha += 1;
+      if (j.racha > j.mejorRacha) { j.mejorRacha = j.racha; }
+      ganados = PUNTOS_BASE + Math.min(BONO_RACHA * (j.racha - 1), BONO_RACHA_MAX);
+      j.puntos += ganados;
+    } else {
+      j.racha = 0;
+      if (item.critico) { p.alertas -= 1; alerta = true; }
+    }
+
+    p.respuestas.push({ id: item.id, concepto: item.concepto, correcta: ok, critico: alerta, omitida: false, jugador: quien });
+    avanzar(p);
+    return { correcta: ok, puntos: ganados, alerta: alerta, racha: j.racha, item: item, jugador: quien,
+             sinTiempo: respuesta === null, fin: p.terminada };
+  }
+
+  /* Modo facilitador: saltar no suma ni resta y no cuenta en el resumen. */
+  function saltar(p) {
+    var item = itemActual(p);
+    if (!item) { return; }
+    p.respuestas.push({ id: item.id, concepto: item.concepto, correcta: false, critico: false, omitida: true, jugador: turno(p) });
+    avanzar(p);
+  }
+
+  /* Comodín 50/50: devuelve los ids de dos opciones incorrectas para ocultar. */
+  function usarMitad(p, rng) {
+    var item = itemActual(p);
+    if (!item || !p.comodines.mitad || item.tipo !== "opcion" || item.opciones.length < 4) { return null; }
+    p.comodines.mitad = false;
+    var malas = item.opciones.filter(function (o) { return o.id !== item.correcta; }).map(function (o) { return o.id; });
+    return barajar(malas, rng || Math.random).slice(0, 2);
+  }
+
+  /* Comodín pista: devuelve la pista del ítem actual. */
+  function usarPista(p) {
+    var item = itemActual(p);
+    if (!item || !p.comodines.pista || !item.pista) { return null; }
+    p.comodines.pista = false;
+    return item.pista;
+  }
+
+  function resumen(p) {
+    var jugadas = p.respuestas.filter(function (r) { return !r.omitida; });
+    var aciertos = jugadas.filter(function (r) { return r.correcta; }).length;
+    var total = jugadas.length;
+    var porcentaje = total ? aciertos / total : 0;
+    var conceptos = {};
+    jugadas.forEach(function (r) {
+      if (!conceptos[r.concepto]) { conceptos[r.concepto] = { ok: 0, total: 0 }; }
+      conceptos[r.concepto].total += 1;
+      if (r.correcta) { conceptos[r.concepto].ok += 1; }
+    });
+    var puntos = 0, mejorRacha = 0;
+    p.jugadores.forEach(function (j) { puntos += j.puntos; if (j.mejorRacha > mejorRacha) { mejorRacha = j.mejorRacha; } });
+    return {
+      misionId: p.misionId,
+      puntos: puntos,
+      jugadores: p.jugadores.map(function (j) { return { puntos: j.puntos, aciertos: j.aciertos, total: j.total, mejorRacha: j.mejorRacha }; }),
+      aciertos: aciertos,
+      total: total,
+      porcentaje: porcentaje,
+      mejorRacha: mejorRacha,
+      alertas: p.alertas,
+      porAlertas: p.porAlertas,
+      completada: !p.porAlertas && p.terminada,
+      insignia: !p.porAlertas && total > 0 && porcentaje >= UMBRAL_INSIGNIA,
+      conceptos: conceptos,
+      fallados: jugadas.filter(function (r) { return !r.correcta; }).map(function (r) { return r.id; })
+    };
+  }
+
+  /* ---------- progreso (solo en este dispositivo) ----------
+     sala: null (sin configurar) o { equipos: [] } individual / { equipos: ["A","B"] } */
+  function progresoVacio() { return { misiones: {}, fallados: [], sonido: false, sinReloj: false, sala: null }; }
+
+  function almacen() {
+    try { return raiz.localStorage || null; } catch (e) { return null; }
+  }
+
+  function cargar() {
+    var a = almacen();
+    if (!a) { return progresoVacio(); }
+    try {
+      var d = JSON.parse(a.getItem(CLAVE));
+      if (d && d.misiones && Array.isArray(d.fallados)) {
+        if (!d.sala || !Array.isArray(d.sala.equipos)) { d.sala = null; }
+        return d;
+      }
+    } catch (e) { /* dato dañado: se empieza de cero */ }
+    return progresoVacio();
+  }
+
+  function guardar(progreso) {
+    var a = almacen();
+    if (!a) { return false; }
+    try { a.setItem(CLAVE, JSON.stringify(progreso)); return true; } catch (e) { return false; }
+  }
+
+  function borrar() {
+    var a = almacen();
+    if (a) { try { a.removeItem(CLAVE); } catch (e) { /* nada */ } }
+    return progresoVacio();
+  }
+
+  /* Mezcla el resumen de una partida en el progreso guardado. */
+  function registrar(progreso, r) {
+    var previo = progreso.misiones[r.misionId] || { mejor: 0, insignia: false, completada: false, jugadas: 0 };
+    var cuenta = r.completada || !previo.porJugador;   // una misión detenida no pisa un resultado completo
+    progreso.misiones[r.misionId] = {
+      mejor: Math.max(previo.mejor, r.puntos),
+      insignia: previo.insignia || r.insignia,
+      completada: previo.completada || r.completada,
+      jugadas: previo.jugadas + 1,
+      aciertos: r.aciertos,
+      total: r.total,
+      porJugador: cuenta ? r.jugadores.map(function (j) { return j.puntos; }) : previo.porJugador,
+      conceptos: cuenta ? r.conceptos : previo.conceptos
+    };
+    // los fallados de esta misión se reemplazan por los de la última partida
+    var prefijo = r.misionId + "-";
+    progreso.fallados = progreso.fallados
+      .filter(function (id) { return id.indexOf(prefijo) !== 0; })
+      .concat(r.fallados);
+    return progreso;
+  }
+
+  /* Una misión se desbloquea cuando la anterior se completó (llegó al final). */
+  function desbloqueada(banco, progreso, misionId) {
+    var i = indiceMision(banco, misionId);
+    if (i <= 0) { return i === 0; }
+    var anterior = progreso.misiones[banco.misiones[i - 1].id];
+    return !!(anterior && anterior.completada);
+  }
+
+  function todasCompletas(banco, progreso) {
+    return banco.misiones.every(function (m) { return progreso.misiones[m.id] && progreso.misiones[m.id].completada; });
+  }
+
+  /* Puntos por jugador o equipo, sumando la última partida completa de cada misión. */
+  function tabla(progreso, n) {
+    var t = [];
+    for (var i = 0; i < n; i++) { t.push(0); }
+    Object.keys(progreso.misiones).forEach(function (k) {
+      (progreso.misiones[k].porJugador || []).forEach(function (pts, j) { if (j < n) { t[j] += pts; } });
+    });
+    return t;
+  }
+
+  function puntajeTotal(progreso) {
+    var t = 0;
+    Object.keys(progreso.misiones).forEach(function (k) { t += progreso.misiones[k].mejor || 0; });
+    return t;
+  }
+
+  /* Conceptos A–G sumando todas las misiones: { A: { ok, total, dominado } } */
+  function conceptosGlobal(progreso) {
+    var c = {};
+    Object.keys(progreso.misiones).forEach(function (k) {
+      var cs = progreso.misiones[k].conceptos || {};
+      Object.keys(cs).forEach(function (letra) {
+        if (!c[letra]) { c[letra] = { ok: 0, total: 0 }; }
+        c[letra].ok += cs[letra].ok; c[letra].total += cs[letra].total;
+      });
+    });
+    Object.keys(c).forEach(function (letra) { c[letra].dominado = c[letra].ok / c[letra].total >= UMBRAL_DOMINIO; });
+    return c;
+  }
+
+  var Motor = {
+    ALERTAS: ALERTAS, UMBRAL_INSIGNIA: UMBRAL_INSIGNIA,
+    barajar: barajar, mision: mision, indiceMision: indiceMision, itemsDe: itemsDe, seleccionar: seleccionar,
+    crearPartida: crearPartida, itemActual: itemActual, turno: turno, esCorrecta: esCorrecta,
+    responder: responder, saltar: saltar, usarMitad: usarMitad, usarPista: usarPista, resumen: resumen,
+    progresoVacio: progresoVacio, cargar: cargar, guardar: guardar, borrar: borrar, registrar: registrar,
+    desbloqueada: desbloqueada, todasCompletas: todasCompletas, tabla: tabla,
+    puntajeTotal: puntajeTotal, conceptosGlobal: conceptosGlobal
+  };
+
+  if (typeof module !== "undefined" && module.exports) { module.exports = Motor; }
+  raiz.AA_Motor = Motor;
+})(typeof window !== "undefined" ? window : globalThis);
+
+</script>
+  <script>
+/*
+ * APP — EAFIT People Analytics Lab
+ * Pantallas y navegación. La lógica de puntaje vive en motor.js
+ * y las preguntas en data/preguntas.js.
+ *
+ * Pantallas: inicio → configuración (individual o equipos) → misiones →
+ *            presentación → juego → resumen → resultados finales → repaso
+ */
+(function () {
+  "use strict";
+
+  var Motor = window.AA_Motor;
+  var BANCO = window.AA_BANCO;
+  var J = BANCO.juego;       // textos generales del juego
+
+  var main = document.getElementById("contenido");
+  var vivo = document.getElementById("vivo");
+  var barraFac = document.getElementById("barra-facilitador");
+  var btnSonido = document.getElementById("btn-sonido");
+
+  var progreso = Motor.cargar();
+  var partida = null;        // partida en curso
+  var respondida = null;     // resultado del reto que se acaba de responder
+  var vista = {};            // estado de pantalla del reto actual (orden de opciones, marcadas, pista…)
+  var config = { n: 1, nombres: ["Equipo 1", "Equipo 2", "Equipo 3"] };
+  var reloj = { id: null, restante: 0, intervalo: null, pausado: false };
+  var esFacilitador = /[?&]facilitador=1/.test(location.search) || location.hash === "#facilitador";
+
+  /* ---------- utilidades ---------- */
+  function e(texto) {
+    return String(texto).replace(/[&<>"']/g, function (c) {
+      return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c];
+    });
+  }
+
+  function anunciar(texto) { vivo.textContent = ""; setTimeout(function () { vivo.textContent = texto; }, 50); }
+
+  function pintar(html, clase) {
+    if (!partida || respondida) { detenerReloj(); }
+    main.className = clase || "";
+    main.innerHTML = html;
+    window.scrollTo(0, 0);
+    var h1 = main.querySelector("h1");
+    if (h1) { h1.setAttribute("tabindex", "-1"); h1.focus({ preventScroll: true }); }
+  }
+
+  function itemPorId(id) {
+    for (var i = 0; i < BANCO.items.length; i++) { if (BANCO.items[i].id === id) { return BANCO.items[i]; } }
+    return null;
+  }
+
+  function opcionesDe(item) {
+    return item.tipo === "clasificar" ? Motor.mision(BANCO, item.mision).categorias : item.opciones;
+  }
+
+  function textoOpcion(item, id) {
+    var lista = opcionesDe(item);
+    for (var i = 0; i < lista.length; i++) { if (lista[i].id === id) { return lista[i].texto; } }
+    return id;
+  }
+
+  /* Texto legible de la respuesta correcta de cualquier ítem (repaso y clave). */
+  function textoCorrecta(item) {
+    var ids = Array.isArray(item.correcta) ? item.correcta : [item.correcta];
+    return ids.map(function (id) { return textoOpcion(item, id); }).join(item.tipo === "ordenar" ? " → " : " · ");
+  }
+
+  /* ---------- sala: individual o por equipos ---------- */
+  function equipos() { return progreso.sala ? progreso.sala.equipos : []; }
+  function nJugadores() { return equipos().length > 1 ? equipos().length : 1; }
+  function porEquipos() { return nJugadores() > 1; }
+  function nombreDe(j) { return equipos()[j] || "Equipo " + (j + 1); }
+  function abierta(m) { return esFacilitador || Motor.desbloqueada(BANCO, progreso, m.id); }
+
+  /* ---------- íconos (trazos simples, heredan el color del texto) ---------- */
+  var TRAZOS = {
+    visto: '<path d="M4 12.5l5 5L20 6.5"/>',
+    equis: '<path d="M6 6l12 12M18 6L6 18"/>',
+    alerta: '<path d="M12 3.5l9.5 16.5h-19z"/><path d="M12 10v4.5M12 17.2v.3"/>',
+    engranaje: '<circle cx="12" cy="12" r="3.2"/><path d="M12 2.8v3M12 18.2v3M2.8 12h3M18.2 12h3M5.5 5.5l2.1 2.1M16.4 16.4l2.1 2.1M18.5 5.5l-2.1 2.1M7.6 16.4l-2.1 2.1"/>',
+    alto: '<circle cx="12" cy="12" r="9"/><path d="M5.6 5.6l12.8 12.8"/>',
+    insignia: '<circle cx="12" cy="9" r="6"/><path d="M8.5 14l-1.5 7 5-3 5 3-1.5-7"/>',
+    candado: '<rect x="5" y="11" width="14" height="9" rx="1.5"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/>',
+    bloque: '<rect x="4" y="5" width="16" height="14" rx="1.5"/><path d="M8 10h8M8 14h5"/>',
+    reloj: '<circle cx="12" cy="13" r="8"/><path d="M12 9v4l2.5 2M9.5 2.8h5"/>',
+    arriba: '<path d="M12 19V5M6 11l6-6 6 6"/>',
+    abajo: '<path d="M12 5v14M6 13l6 6 6-6"/>'
+  };
+  function icono(nombre) {
+    return '<svg class="icono" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" ' +
+      'stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">' + TRAZOS[nombre] + "</svg>";
+  }
+
+  /* ---------- sonido opcional (apagado por defecto) ---------- */
+  var audio = null;
+  function tono(frecuencia, duracion) {
+    if (!progreso.sonido) { return; }
+    try {
+      audio = audio || new (window.AudioContext || window.webkitAudioContext)();
+      var o = audio.createOscillator(), g = audio.createGain();
+      o.frequency.value = frecuencia; o.type = "sine";
+      g.gain.setValueAtTime(0.08, audio.currentTime);
+      g.gain.exponentialRampToValueAtTime(0.0001, audio.currentTime + duracion);
+      o.connect(g); g.connect(audio.destination);
+      o.start(); o.stop(audio.currentTime + duracion);
+    } catch (err) { /* sin audio disponible: el juego sigue igual */ }
+  }
+  function pintarSonido() {
+    btnSonido.setAttribute("aria-pressed", progreso.sonido ? "true" : "false");
+    btnSonido.textContent = "Sonido: " + (progreso.sonido ? "encendido" : "apagado");
+  }
+
+  /* ---------- pantalla: inicio ---------- */
+  function verInicio() {
+    partida = null;
+    pintar(
+      '<section class="portada"><div class="contenedor">' +
+        '<p class="antetitulo">' + e(J.antetitulo) + "</p>" +
+        "<h1>" + e(J.nombre) + "</h1>" +
+        '<p class="portada__texto">' + e(J.portada) + "</p>" +
+        '<div class="acciones">' +
+          (progreso.sala
+            ? '<button type="button" class="boton boton--claro" data-accion="misiones">Continuar</button>' +
+              '<button type="button" class="boton boton--contorno" data-accion="configurar">Partida nueva</button>'
+            : '<button type="button" class="boton boton--claro" data-accion="configurar">Empezar</button>') +
+        "</div>" +
+        '<p class="portada__firma">Inspira Crea Transforma</p>' +
+      "</div></section>" +
+      '<section class="contenedor" aria-label="Datos del juego"><div class="datos">' +
+        '<p class="dato"><strong>5 misiones y 1 reto final</strong><span>Cada misión completada desbloquea la siguiente.</span></p>' +
+        '<p class="dato"><strong>Solo o por equipos</strong><span>Un jugador, o dos o tres equipos por turnos.</span></p>' +
+        '<p class="dato"><strong>Sin registro</strong><span>El progreso se guarda solo en este dispositivo.</span></p>' +
+      "</div></section>"
+    );
+  }
+
+  /* ---------- pantalla: configuración de la sala ---------- */
+  function verConfiguracion() {
+    partida = null;
+    var modos = [
+      { n: 1, texto: "Un jugador", ayuda: "Juegas a tu ritmo." },
+      { n: 2, texto: "Dos equipos", ayuda: "Responden por turnos." },
+      { n: 3, texto: "Tres equipos", ayuda: "Responden por turnos." }
+    ].map(function (m) {
+      return '<button type="button" class="opcion' + (config.n === m.n ? " opcion--marcada" : "") + '" data-accion="modo" data-n="' + m.n +
+        '" aria-pressed="' + (config.n === m.n ? "true" : "false") + '">' +
+        '<span class="opcion__texto">' + m.texto + '</span><span class="opcion__ayuda">' + m.ayuda + "</span></button>";
+    }).join("");
+
+    var campos = "";
+    if (config.n > 1) {
+      for (var i = 0; i < config.n; i++) {
+        campos += '<label class="campo"><span>Nombre del equipo ' + (i + 1) + "</span>" +
+          '<input type="text" id="equipo-' + i + '" maxlength="18" autocomplete="off" value="' + e(config.nombres[i]) + '"></label>';
+      }
+      campos = '<div class="campos">' + campos + "</div>" +
+        '<p class="nota">Usa nombres de equipo, no nombres de personas. No se envían a ningún lado.</p>';
+    }
+
+    pintar(
+      '<div class="contenedor">' +
+        '<p class="antetitulo">Antes de empezar</p>' +
+        "<h1>¿Cómo van a jugar?</h1>" +
+        '<div class="opciones opciones--fila" role="group" aria-label="Modo de juego">' + modos + "</div>" +
+        campos +
+        (progreso.sala && Object.keys(progreso.misiones).length ? '<p class="nota">Al comenzar una partida nueva se borra el progreso guardado.</p>' : "") +
+        '<div class="acciones">' +
+          '<button type="button" class="boton" data-accion="crear-sala">Comenzar</button>' +
+          '<button type="button" class="boton boton--secundario" data-accion="inicio">Volver</button>' +
+        "</div>" +
+      "</div>"
+    );
+  }
+
+  function leerNombres() {
+    for (var i = 0; i < config.n; i++) {
+      var campo = document.getElementById("equipo-" + i);
+      var v = campo && typeof campo.value === "string" ? campo.value.trim().slice(0, 18) : "";
+      config.nombres[i] = v || "Equipo " + (i + 1);
+    }
+  }
+
+  function crearSala() {
+    if (config.n > 1) { leerNombres(); }
+    var sonido = progreso.sonido, sinReloj = progreso.sinReloj;
+    progreso = Motor.progresoVacio();
+    progreso.sonido = sonido; progreso.sinReloj = sinReloj;
+    progreso.sala = { equipos: config.n > 1 ? config.nombres.slice(0, config.n) : [] };
+    Motor.guardar(progreso);
+    verMisiones();
+  }
+
+  /* ---------- tabla de posiciones (calculada en este dispositivo) ---------- */
+  function tablaPosiciones(titulo) {
+    if (!porEquipos()) { return ""; }
+    var puntos = Motor.tabla(progreso, nJugadores());
+    var filas = puntos.map(function (p, j) { return { nombre: nombreDe(j), puntos: p }; })
+      .sort(function (a, b) { return b.puntos - a.puntos; })
+      .map(function (f, i) {
+        return "<tr><td>" + (i + 1) + '.</td><th scope="row">' + e(f.nombre) + "</th><td>" + f.puntos + " puntos</td></tr>";
+      }).join("");
+    return '<table class="tabla"><caption>' + titulo + "</caption><tbody>" + filas + "</tbody></table>";
+  }
+
+  /* ---------- pantalla: misiones ---------- */
+  function verMisiones() {
+    if (!progreso.sala) { return verConfiguracion(); }
+    partida = null; respondida = null;
+    pintarFacilitador();
+    var insignias = 0;
+    var tarjetas = BANCO.misiones.map(function (m, i) {
+      var p = progreso.misiones[m.id];
+      var libre = abierta(m);
+      if (p && p.insignia) { insignias += 1; }
+      var estado;
+      if (!libre) { estado = icono("candado") + "Completa la misión " + i + " para desbloquearla"; }
+      else if (p && p.insignia) { estado = icono("insignia") + "Insignia: " + e(m.insignia) + " · " + p.mejor + " puntos"; }
+      else if (p && p.completada) { estado = icono("visto") + "Completada · " + p.mejor + " puntos · insignia pendiente"; }
+      else if (p) { estado = icono("alerta") + "Detenida por alertas: inténtala de nuevo"; }
+      else { estado = "Lista para jugar"; }
+      return '<li class="mision' + (libre ? "" : " mision--bloqueada") + '">' +
+        '<span class="mision__numero" aria-hidden="true">' + (i + 1) + "</span>" +
+        "<h2>" + (i === BANCO.misiones.length - 1 ? "Reto final · " : "") + e(m.titulo) + "</h2>" +
+        '<p class="mision__resumen">' + e(m.resumen) + "</p>" +
+        '<div class="mision__pie"><span class="mision__estado">' + estado + "</span>" +
+        (libre ? '<button type="button" class="boton' + (p && p.completada ? " boton--secundario" : "") + '" data-accion="presentar" data-mision="' + m.id + '">' +
+          (p ? "Jugar de nuevo" : "Jugar") + '<span class="solo-lectores">: ' + e(m.titulo) + "</span></button>" : "") +
+        "</div></li>";
+    }).join("");
+
+    pintar(
+      '<div class="contenedor">' +
+        '<p class="antetitulo">' + e(J.lugar) + "</p>" +
+        "<h1>Misiones</h1>" +
+        '<p class="marcador">' +
+          (porEquipos() ? "" : "<span>Puntaje total: " + Motor.puntajeTotal(progreso) + "</span>") +
+          "<span>Insignias: " + insignias + " de " + BANCO.misiones.length + "</span></p>" +
+        tablaPosiciones("Tabla de posiciones") +
+        '<ol class="lista-misiones">' + tarjetas + "</ol>" +
+        '<div class="acciones">' +
+          (Motor.todasCompletas(BANCO, progreso) ? '<button type="button" class="boton" data-accion="resultados">Ver resultados finales</button>' : "") +
+          (progreso.fallados.length ? '<button type="button" class="boton boton--secundario" data-accion="repaso">Repasa estos conceptos (' + progreso.fallados.length + ")</button>" : "") +
+          '<button type="button" class="boton boton--texto" data-accion="borrar">Borrar mi progreso</button>' +
+        "</div>" +
+      "</div>"
+    );
+  }
+
+  /* ---------- pantalla: presentación de la misión ---------- */
+  function verPresentacion(misionId) {
+    var m = Motor.mision(BANCO, misionId);
+    if (!m || !abierta(m)) { return verMisiones(); }
+    var n = Motor.indiceMision(BANCO, misionId) + 1;
+    pintar(
+      '<div class="contenedor">' +
+        '<p class="antetitulo">Misión ' + n + " de " + BANCO.misiones.length + "</p>" +
+        "<h1>" + e(m.titulo) + "</h1>" +
+        '<p class="intro__instruccion">' + e(m.instruccion) + "</p>" +
+        '<ul class="reglas">' +
+          (porEquipos() ? "<li><strong>Turnos:</strong> en cada reto responde un equipo. Empieza " + e(nombreDe((n - 1) % nJugadores())) + ".</li>" : "") +
+          "<li><strong>Puntos y racha:</strong> cada acierto suma 100 puntos, y los aciertos seguidos dan puntos extra.</li>" +
+          "<li><strong>Alertas de riesgo:</strong> hay " + Motor.ALERTAS + (porEquipos() ? " para toda la sala" : "") +
+            ". Se pierde una con cada error crítico, " + e(J.ejemploCritico) + ". Sin alertas, la misión se detiene.</li>" +
+          (m.segundos ? "<li><strong>Reloj:</strong> " + m.segundos + " segundos por pregunta. <strong>Comodines:</strong> un 50/50 y una pista del facilitador.</li>" : "") +
+          "<li><strong>Insignia:</strong> «" + e(m.insignia) + "», con 70 % de aciertos o más.</li>" +
+        "</ul>" +
+        '<div class="acciones">' +
+          '<button type="button" class="boton" data-accion="jugar" data-mision="' + m.id + '">Comenzar</button>' +
+          (m.segundos ? '<button type="button" class="boton boton--secundario" data-accion="sin-reloj" aria-pressed="' + (progreso.sinReloj ? "true" : "false") + '">' +
+            (progreso.sinReloj ? "Reloj: apagado" : "Reloj: encendido") + "</button>" : "") +
+          '<button type="button" class="boton boton--secundario" data-accion="misiones">Volver a misiones</button>' +
+        "</div>" +
+      "</div>"
+    );
+  }
+
+  /* ---------- juego ---------- */
+  function iniciar(misionId, rng) {
+    var m = Motor.mision(BANCO, misionId);
+    if (!m || !abierta(m)) { return verMisiones(); }
+    partida = Motor.crearPartida(BANCO, misionId, rng, {
+      jugadores: nJugadores(),
+      inicio: Motor.indiceMision(BANCO, misionId)   // el equipo que empieza rota de misión en misión
+    });
+    respondida = null; vista = {};
+    verItem();
+  }
+
+  /* Reloj del reto final */
+  function detenerReloj() { if (reloj.intervalo) { clearInterval(reloj.intervalo); reloj.intervalo = null; } }
+  function pintarReloj() {
+    var t = document.getElementById("reloj-texto"), b = document.getElementById("reloj-barra");
+    var total = Motor.mision(BANCO, partida.misionId).segundos;
+    if (t) { t.textContent = reloj.restante + " s" + (reloj.pausado ? " (en pausa)" : ""); }
+    if (b) { b.style.width = Math.round((reloj.restante / total) * 100) + "%"; }
+  }
+  function tic() {
+    if (!partida || respondida || reloj.pausado) { return; }
+    reloj.restante -= 1;
+    pintarReloj();
+    if (reloj.restante === 5) { anunciar("Quedan 5 segundos."); }
+    if (reloj.restante <= 0) { responder(null); }
+  }
+  function prepararReloj(item) {
+    var m = Motor.mision(BANCO, item.mision);
+    if (!m.segundos || progreso.sinReloj) { detenerReloj(); return false; }
+    if (reloj.id !== item.id) { reloj.id = item.id; reloj.restante = m.segundos; reloj.pausado = false; }
+    if (!reloj.intervalo) { reloj.intervalo = setInterval(tic, 1000); }
+    return true;
+  }
+
+  function cabeceraPartida(item) {
+    var total = partida.items.length;
+    // Al responder, el motor ya avanzó el índice: por eso el reto visible es "indice".
+    var hechas = partida.indice;
+    var actual = respondida ? partida.indice : partida.indice + 1;
+    var m = Motor.mision(BANCO, partida.misionId);
+    var quien = respondida ? respondida.jugador : Motor.turno(partida);
+    var j = partida.jugadores[quien];
+    var conReloj = !respondida && prepararReloj(item);
+
+    var turnos = "";
+    if (porEquipos()) {
+      turnos = '<div class="turnos">' + partida.jugadores.map(function (x, k) {
+        return '<p class="turno' + (k === quien ? " turno--activo" : "") + '">' +
+          (k === quien ? '<span class="turno__etiqueta">' + (respondida ? "Respondió" : "Turno de") + "</span>" : "") +
+          "<strong>" + e(nombreDe(k)) + "</strong><span>" + x.puntos + " puntos</span></p>";
+      }).join("") + "</div>";
+    }
+
+    var comodines = "";
+    if (m.segundos && !respondida) {
+      comodines = '<div class="comodines">' +
+        (conReloj ? '<p class="reloj">' + icono("reloj") + '<span id="reloj-texto" role="timer">' + reloj.restante + ' s</span>' +
+          '<span class="reloj__pista"><span class="reloj__barra" id="reloj-barra" style="width:' + Math.round((reloj.restante / m.segundos) * 100) + '%"></span></span></p>' : "") +
+        '<button type="button" class="boton boton--secundario boton--chico" data-accion="comodin-mitad"' + (partida.comodines.mitad && item.opciones.length >= 4 ? "" : " disabled") + ">Comodín 50/50</button>" +
+        '<button type="button" class="boton boton--secundario boton--chico" data-accion="comodin-pista"' + (partida.comodines.pista ? "" : " disabled") + ">Pista del facilitador</button>" +
+      "</div>";
+    }
+
+    return '<p class="antetitulo">' + e(m.titulo) + "</p>" + turnos +
+      '<div class="estado">' +
+        "<span>Reto " + Math.min(actual, total) + " de " + total + "</span>" +
+        (porEquipos() ? "" : "<span>Puntos: " + j.puntos + "</span>") +
+        "<span>Racha: " + j.racha + "</span>" +
+        '<span class="estado__alertas">' + icono("alerta") + "Alertas de riesgo: " + partida.alertas + " de " + Motor.ALERTAS + "</span>" +
+      "</div>" +
+      '<div class="progreso" role="progressbar" aria-label="Avance de la misión" aria-valuemin="0" aria-valuemax="' + total +
+        '" aria-valuenow="' + hechas + '"><div class="progreso__barra" style="width:' + Math.round((hechas / total) * 100) + '%"></div></div>' +
+      comodines;
+  }
+
+  function verItem() {
+    pintarFacilitador();
+    var item = respondida ? respondida.item : Motor.itemActual(partida);
+    if (!item) { return verResumen(); }
+    if (vista.id !== item.id) { vista = { id: item.id }; }
+    DIBUJANTES[item.tipo](item);
+    if (respondida) {
+      var sig = document.getElementById("btn-siguiente");
+      if (sig) { sig.focus({ preventScroll: false }); }
+    }
+  }
+
+  /* Marco común de todos los retos */
+  function marco(item, cuerpo, ayuda) {
+    var r = respondida;
+    var contexto = "";
+    if (item.ficha) { contexto += '<p class="ficha">' + icono("bloque") + "Ficha: <strong>" + e(item.ficha) + "</strong></p>"; }
+    if (item.chat) {
+      contexto += '<div class="chat" role="group" aria-label="Conversación con el asistente">' +
+        '<p class="burbuja burbuja--usuario"><span class="burbuja__quien">Empleado</span>' + e(item.chat.pregunta) + "</p>" +
+        '<p class="burbuja burbuja--agente"><span class="burbuja__quien">Asistente (caso ficticio)</span>' + e(item.chat.respuesta) + "</p>" +
+        (item.chat.nota ? '<p class="nota">' + e(item.chat.nota) + "</p>" : "") + "</div>";
+    }
+    pintar(
+      '<div class="contenedor" data-item="' + item.id + '">' +
+        cabeceraPartida(item) +
+        '<h1 class="solo-lectores">Reto ' + (r ? partida.indice : partida.indice + 1) + "</h1>" +
+        contexto + cuerpo +
+        (vista.pista && !r ? '<p class="pista"><strong>Pista:</strong> ' + e(vista.pista) + "</p>" : "") +
+        (r ? retro(r) : (ayuda ? '<p class="ayuda-teclado">' + ayuda + "</p>" : "")) +
+        (esFacilitador && !r ? '<p class="clave" id="clave" hidden>Clave: ' + e(textoCorrecta(item)) + ". " + e(item.explicacion) + "</p>" : "") +
+      "</div>"
+    );
+  }
+
+  /* --- tipo "clasificar": una tarjeta y varias categorías de destino --- */
+  function dibujarClasificar(item) {
+    var m = Motor.mision(BANCO, item.mision);
+    var r = respondida;
+    var destinos = m.categorias.map(function (c, i) {
+      var clase = "destino", marca = "";
+      if (r) {
+        if (c.id === item.correcta) { clase += " destino--era"; marca = icono("visto") + " Respuesta correcta"; }
+        else if (c.id === r.elegida) { clase += " destino--elegido-mal"; marca = icono("equis") + " Respuesta elegida"; }
+        else { clase += " destino--apagado"; }
+      }
+      return '<button type="button" class="' + clase + '" data-accion="responder" data-respuesta="' + c.id + '"' + (r ? " disabled" : "") + ">" +
+        icono(c.icono || "bloque") +
+        '<span class="destino__texto">' + e(c.texto) + "</span>" +
+        (r ? (marca ? '<span class="destino__marca">' + marca + "</span>" : "")
+           : (c.ayuda ? '<span class="destino__ayuda">' + e(c.ayuda) + "</span>" : "") +
+             '<span class="destino__tecla" aria-hidden="true">' + (i + 1) + "</span>") +
+        "</button>";
+    }).join("");
+
+    marco(item,
+      '<div class="tarjeta' + (r ? "" : " tarjeta--arrastrable") + '" id="tarjeta">' +
+        '<span class="tarjeta__etiqueta">' + e(m.etiqueta || "Tarjeta") + "</span>" +
+        e(item.enunciado) +
+      "</div>" +
+      '<div class="destinos destinos--' + m.categorias.length + '" role="group" aria-label="¿A dónde va?">' + destinos + "</div>",
+      "Toca una opción, arrastra la tarjeta o usa las teclas 1 a " + m.categorias.length + "."
+    );
+    if (!r) { activarArrastre(document.getElementById("tarjeta")); }
+  }
+
+  /* --- tipo "opcion": una sola respuesta correcta --- */
+  function ordenVisible(item) {
+    if (!vista.orden) { vista.orden = Motor.barajar(item.opciones.map(function (o) { return o.id; }), Math.random); }
+    return vista.orden;
+  }
+
+  function dibujarOpcion(item) {
+    var r = respondida;
+    var ocultas = vista.ocultas || [];
+    var botones = ordenVisible(item).map(function (id, i) {
+      var clase = "opcion", marca = "", apagada = ocultas.indexOf(id) >= 0;
+      if (r) {
+        if (id === item.correcta) { clase += " opcion--era"; marca = icono("visto") + " Respuesta correcta"; }
+        else if (id === r.elegida) { clase += " opcion--elegido-mal"; marca = icono("equis") + " Respuesta elegida"; }
+        else { clase += " opcion--apagada"; }
+      } else if (apagada) { clase += " opcion--apagada"; marca = "Descartada por el 50/50"; }
+      return '<button type="button" class="' + clase + '" data-accion="responder" data-respuesta="' + id + '"' + (r || apagada ? " disabled" : "") + ">" +
+        '<span class="opcion__tecla" aria-hidden="true">' + (i + 1) + "</span>" +
+        '<span class="opcion__texto">' + e(textoOpcion(item, id)) + "</span>" +
+        (marca ? '<span class="opcion__marca">' + marca + "</span>" : "") + "</button>";
+    }).join("");
+    marco(item,
+      '<p class="pregunta">' + e(item.enunciado) + "</p>" +
+      '<div class="opciones" role="group" aria-label="Opciones de respuesta">' + botones + "</div>",
+      "Toca una opción o usa las teclas 1 a " + item.opciones.length + "."
+    );
+  }
+
+  /* --- tipo "multi": varias respuestas correctas --- */
+  function dibujarMulti(item) {
+    var r = respondida;
+    vista.marcadas = vista.marcadas || {};
+    var botones = ordenVisible(item).map(function (id) {
+      var clase = "opcion", marca = "", sel = !!vista.marcadas[id], era = item.correcta.indexOf(id) >= 0;
+      if (r) {
+        if (era && sel) { clase += " opcion--era"; marca = icono("visto") + " Bien marcada"; }
+        else if (era) { clase += " opcion--era"; marca = icono("alerta") + " Faltó marcarla"; }
+        else if (sel) { clase += " opcion--elegido-mal"; marca = icono("equis") + " No aplicaba"; }
+        else { clase += " opcion--apagada"; }
+      } else if (sel) { clase += " opcion--marcada"; }
+      return '<button type="button" class="' + clase + '" data-accion="marcar" data-id="' + id + '" aria-pressed="' + (sel ? "true" : "false") + '"' + (r ? " disabled" : "") + ">" +
+        '<span class="opcion__casilla" aria-hidden="true">' + icono("visto") + "</span>" +
+        '<span class="opcion__texto">' + e(textoOpcion(item, id)) + "</span>" +
+        (marca ? '<span class="opcion__marca">' + marca + "</span>" : "") + "</button>";
+    }).join("");
+    marco(item,
+      '<p class="pregunta">' + e(item.enunciado) + "</p>" +
+      '<div class="opciones" role="group" aria-label="Marca todas las que apliquen">' + botones + "</div>" +
+      (r ? "" : '<div class="acciones"><button type="button" class="boton" data-accion="comprobar">Comprobar</button></div>'),
+      "Marca todas las que apliquen y luego pulsa «Comprobar»."
+    );
+  }
+
+  /* --- tipo "ordenar": poner los pasos en orden con los botones subir y bajar --- */
+  function dibujarOrdenar(item) {
+    var r = respondida;
+    if (!vista.fila) {
+      var ids = item.opciones.map(function (o) { return o.id; }), intentos = 0;
+      do { vista.fila = Motor.barajar(ids, Math.random); intentos++; }
+      while (intentos < 10 && vista.fila.join() === item.correcta.join());
+    }
+    var filas = vista.fila.map(function (id, i) {
+      var bien = r && item.correcta[i] === id;
+      return '<li class="paso' + (r ? (bien ? " paso--bien" : " paso--mal") : "") + '">' +
+        '<span class="paso__numero" aria-hidden="true">' + (i + 1) + "</span>" +
+        '<span class="paso__texto">' + e(textoOpcion(item, id)) +
+          (r ? '<span class="opcion__marca">' + (bien ? icono("visto") + " En su lugar" : icono("equis") + " Va en otra posición") + "</span>" : "") + "</span>" +
+        (r ? "" :
+          '<span class="paso__botones">' +
+            '<button type="button" class="boton boton--secundario boton--icono" id="subir-' + id + '" data-accion="mover" data-id="' + id + '" data-dir="-1"' + (i === 0 ? " disabled" : "") +
+              ' aria-label="Subir: ' + e(textoOpcion(item, id)) + '">' + icono("arriba") + "</button>" +
+            '<button type="button" class="boton boton--secundario boton--icono" id="bajar-' + id + '" data-accion="mover" data-id="' + id + '" data-dir="1"' + (i === vista.fila.length - 1 ? " disabled" : "") +
+              ' aria-label="Bajar: ' + e(textoOpcion(item, id)) + '">' + icono("abajo") + "</button>" +
+          "</span>") +
+        "</li>";
+    }).join("");
+    marco(item,
+      '<p class="pregunta">' + e(item.enunciado) + "</p>" +
+      '<ol class="pasos" data-orden="' + vista.fila.join(",") + '">' + filas + "</ol>" +
+      (r ? "" : '<div class="acciones"><button type="button" class="boton" data-accion="comprobar">Comprobar</button></div>'),
+      "Usa las flechas para subir o bajar cada paso y luego pulsa «Comprobar»."
+    );
+  }
+
+  var DIBUJANTES = { clasificar: dibujarClasificar, opcion: dibujarOpcion, multi: dibujarMulti, ordenar: dibujarOrdenar };
+
+  /* Bloque de retroalimentación: nunca solo color; siempre ícono y texto. */
+  function retro(r) {
+    var clase, titulo;
+    if (r.correcta) {
+      clase = "retro--ok";
+      titulo = icono("visto") + "Correcto · +" + r.puntos + " puntos" + (r.racha > 1 ? " · racha de " + r.racha : "");
+    } else if (r.alerta) {
+      clase = "retro--alerta";
+      titulo = icono("alerta") + "Alerta de riesgo · quedan " + partida.alertas;
+    } else {
+      clase = "retro--mal";
+      titulo = r.sinTiempo ? icono("reloj") + "Se acabó el tiempo" : icono("equis") + "Para repasar";
+    }
+    return '<div class="retro ' + clase + '">' +
+      '<p class="retro__titulo">' + titulo + "</p>" +
+      (r.correcta ? "" : "<p>La respuesta es: <strong>" + e(textoCorrecta(r.item)) + "</strong>.</p>") +
+      "<p>" + e(r.item.explicacion) + "</p>" +
+      '<p class="retro__fuente">Fuente: ' + e(r.item.fuente) + "</p>" +
+      '<div class="acciones"><button type="button" class="boton' + (r.alerta ? " boton--claro" : "") + '" id="btn-siguiente" data-accion="siguiente">' +
+        (r.fin ? "Ver resultado" : (porEquipos() ? "Siguiente turno" : "Siguiente")) + "</button></div>" +
+    "</div>";
+  }
+
+  function responder(respuesta) {
+    if (!partida || respondida) { return; }
+    detenerReloj();
+    var r = Motor.responder(partida, respuesta);
+    if (!r) { return; }
+    r.elegida = respuesta;
+    respondida = r;
+    tono(r.correcta ? 880 : 220, r.correcta ? 0.15 : 0.3);
+    anunciar(r.correcta ? "Correcto. Más " + r.puntos + " puntos." :
+      (r.sinTiempo ? "Se acabó el tiempo. " : r.alerta ? "Alerta de riesgo. " : "Para repasar. ") +
+      "La respuesta es " + textoCorrecta(r.item) + ". " + r.item.explicacion);
+    verItem();
+  }
+
+  function siguiente() {
+    if (!partida) { return; }
+    respondida = null;
+    if (partida.terminada) { verResumen(); } else { verItem(); }
+  }
+
+  /* Arrastrar la tarjeta hasta un destino (los botones son la alternativa). */
+  function activarArrastre(tarjeta) {
+    if (!tarjeta || !window.PointerEvent) { return; }
+    var inicio = null, encima = null;
+
+    function destinoEn(x, y) {
+      var lista = document.elementsFromPoint(x, y);
+      for (var i = 0; i < lista.length; i++) {
+        var d = lista[i].closest ? lista[i].closest(".destino") : null;
+        if (d) { return d; }
+      }
+      return null;
+    }
+    function marcar(d) {
+      if (encima && encima !== d) { encima.classList.remove("destino--encima"); }
+      encima = d;
+      if (d) { d.classList.add("destino--encima"); }
+    }
+
+    tarjeta.addEventListener("pointerdown", function (ev) {
+      if (ev.button) { return; }
+      inicio = { x: ev.clientX, y: ev.clientY, movio: false };
+      tarjeta.classList.remove("tarjeta--regresa");
+      tarjeta.setPointerCapture(ev.pointerId);
+    });
+    tarjeta.addEventListener("pointermove", function (ev) {
+      if (!inicio) { return; }
+      var dx = ev.clientX - inicio.x, dy = ev.clientY - inicio.y;
+      if (!inicio.movio && Math.abs(dx) + Math.abs(dy) < 8) { return; }
+      inicio.movio = true;
+      tarjeta.classList.add("tarjeta--moviendo");
+      tarjeta.style.transform = "translate(" + dx + "px," + dy + "px)";
+      marcar(destinoEn(ev.clientX, ev.clientY));
+    });
+    function soltar(ev) {
+      if (!inicio) { return; }
+      var d = inicio.movio ? destinoEn(ev.clientX, ev.clientY) : null;
+      inicio = null;
+      marcar(null);
+      tarjeta.classList.remove("tarjeta--moviendo");
+      if (d && ev.type === "pointerup") { responder(d.getAttribute("data-respuesta")); return; }
+      tarjeta.classList.add("tarjeta--regresa");
+      tarjeta.style.transform = "";
+    }
+    tarjeta.addEventListener("pointerup", soltar);
+    tarjeta.addEventListener("pointercancel", soltar);
+  }
+
+  /* ---------- pantalla: resumen de la misión ---------- */
+  function verResumen() {
+    var r = Motor.resumen(partida);
+    var m = Motor.mision(BANCO, partida.misionId);
+    var i = Motor.indiceMision(BANCO, m.id);
+    var proxima = BANCO.misiones[i + 1];
+    Motor.guardar(Motor.registrar(progreso, r));
+    partida = null; respondida = null;
+    pintarFacilitador();
+    if (r.insignia) { tono(660, 0.15); setTimeout(function () { tono(990, 0.25); }, 160); }
+
+    var bloqueInsignia = r.insignia
+      ? '<div class="insignia">' + icono("insignia") + '<p><span>Insignia desbloqueada</span><span class="insignia__nombre">' + e(m.insignia) + "</span></p></div>"
+      : '<div class="insignia insignia--pendiente">' + icono("candado") + '<p><span>Insignia pendiente</span><span class="insignia__nombre">' + e(m.insignia) + "</span>" +
+        "<span>" + (r.porAlertas ? "Se agotaron las alertas de riesgo. Repasa y vuelve a intentarlo." : "Se necesita 70 % de aciertos. Puedes repetir la misión cuando quieras.") + "</span></p></div>";
+
+    var desbloqueo = "";
+    if (r.completada && proxima) {
+      desbloqueo = '<p class="aviso">' + icono("visto") + "Misión " + (i + 2) + " desbloqueada: <strong>" + e(proxima.titulo) + "</strong></p>";
+    } else if (r.porAlertas && !progreso.misiones[m.id].completada) {
+      desbloqueo = '<p class="aviso aviso--pendiente">' + icono("candado") + "Para desbloquear la siguiente misión hay que llegar al final de esta.</p>";
+    }
+
+    var cifras;
+    if (porEquipos()) {
+      cifras = '<table class="tabla"><caption>Resultado de la misión</caption><tbody>' +
+        r.jugadores.map(function (j, k) {
+          return '<tr><th scope="row">' + e(nombreDe(k)) + "</th><td>" + j.puntos + " puntos</td><td>" + j.aciertos + " de " + j.total + " aciertos</td></tr>";
+        }).join("") + "</tbody></table>" +
+        '<p class="marcador"><span>Sala: ' + r.aciertos + " de " + r.total + " aciertos</span><span>Alertas sin usar: " + r.alertas + " de " + Motor.ALERTAS + "</span></p>";
+    } else {
+      cifras = '<div class="cifras">' +
+        '<p class="cifra"><strong>' + r.puntos + "</strong><span>puntos</span></p>" +
+        '<p class="cifra"><strong>' + r.aciertos + " de " + r.total + "</strong><span>aciertos</span></p>" +
+        '<p class="cifra"><strong>' + r.mejorRacha + "</strong><span>mejor racha</span></p>" +
+        '<p class="cifra"><strong>' + r.alertas + " de " + Motor.ALERTAS + "</strong><span>alertas de riesgo sin usar</span></p>" +
+      "</div>";
+    }
+
+    var principal = "";
+    if (r.completada && proxima) {
+      principal = '<button type="button" class="boton" data-accion="presentar" data-mision="' + proxima.id + '">Ir a la misión ' + (i + 2) + "</button>";
+    } else if (r.completada && Motor.todasCompletas(BANCO, progreso)) {
+      principal = '<button type="button" class="boton" data-accion="resultados">Ver resultados finales</button>';
+    }
+
+    pintar(
+      '<div class="contenedor">' +
+        '<p class="antetitulo">' + e(m.titulo) + "</p>" +
+        "<h1>" + (r.porAlertas ? "Misión detenida" : "Misión cumplida") + "</h1>" +
+        bloqueInsignia + desbloqueo + cifras +
+        '<div class="acciones">' + principal +
+          (r.fallados.length ? '<button type="button" class="boton boton--secundario" data-accion="repaso">Repasa estos conceptos (' + progreso.fallados.length + ")</button>" : "") +
+          '<button type="button" class="boton boton--secundario" data-accion="jugar" data-mision="' + m.id + '">Jugar de nuevo</button>' +
+          '<button type="button" class="boton boton--secundario" data-accion="misiones">Volver a misiones</button>' +
+        "</div>" +
+      "</div>"
+    );
+  }
+
+  /* ---------- pantalla: resultados finales ---------- */
+  function verResultados() {
+    partida = null; respondida = null;
+    pintarFacilitador();
+    var insignias = BANCO.misiones.map(function (m) {
+      var p = progreso.misiones[m.id];
+      var ok = p && p.insignia;
+      return '<li class="logro' + (ok ? "" : " logro--pendiente") + '">' + icono(ok ? "insignia" : "candado") +
+        "<span><strong>" + e(m.insignia) + "</strong><span>" + (ok ? "Insignia ganada" : "Insignia pendiente") + " · " + e(m.titulo) + "</span></span></li>";
+    }).join("");
+
+    var c = Motor.conceptosGlobal(progreso);
+    function lista(dominado) {
+      var filas = Object.keys(BANCO.conceptos).filter(function (k) { return c[k] && c[k].dominado === dominado; }).map(function (k) {
+        return "<li><strong>" + e(BANCO.conceptos[k]) + "</strong> · " + c[k].ok + " de " + c[k].total + " aciertos</li>";
+      }).join("");
+      return filas ? '<ul class="conceptos">' + filas + "</ul>" : '<p class="nota">' + (dominado ? "Todavía ninguno: repasa y vuelve a jugar." : "Ninguno. ¡Excelente!") + "</p>";
+    }
+
+    pintar(
+      '<div class="contenedor">' +
+        '<p class="antetitulo">' + e(J.lugar) + "</p>" +
+        "<h1>Resultados finales</h1>" +
+        (porEquipos() ? tablaPosiciones("Tabla de posiciones de la sala")
+          : '<p class="marcador"><span>Puntaje total: ' + Motor.puntajeTotal(progreso) + "</span></p>") +
+        "<h2>Insignias</h2>" + '<ul class="logros">' + insignias + "</ul>" +
+        '<div class="dos-columnas">' +
+          "<div><h2>Conceptos dominados</h2>" + lista(true) + "</div>" +
+          "<div><h2>Conceptos por repasar</h2>" + lista(false) + "</div>" +
+        "</div>" +
+        '<p class="cierre">' + e(J.cierre) + "</p>" +
+        '<div class="acciones">' +
+          (progreso.fallados.length ? '<button type="button" class="boton" data-accion="repaso">Repasa estos conceptos (' + progreso.fallados.length + ")</button>" : "") +
+          '<button type="button" class="boton boton--secundario" data-accion="misiones">Volver a misiones</button>' +
+        "</div>" +
+        '<p class="firma">Inspira Crea Transforma</p>' +
+      "</div>"
+    );
+  }
+
+  /* ---------- pantalla: repaso de errores ---------- */
+  function verRepaso() {
+    partida = null; respondida = null;
+    var lista = progreso.fallados.map(itemPorId).filter(Boolean).map(function (it) {
+      return "<li>" +
+        (it.chat ? '<p class="repaso__fuente">Empleado: «' + e(it.chat.pregunta) + "» · Asistente: «" + e(it.chat.respuesta) + "»</p>" : "") +
+        '<p class="repaso__enunciado">' + e(it.enunciado) + "</p>" +
+        "<p>Respuesta: <strong>" + e(textoCorrecta(it)) + "</strong></p>" +
+        "<p>" + e(it.explicacion) + "</p>" +
+        '<p class="repaso__fuente">Fuente: ' + e(it.fuente) + "</p></li>";
+    }).join("");
+    pintar(
+      '<div class="contenedor">' +
+        '<p class="antetitulo">Para volver a mirar</p>' +
+        "<h1>Repasa estos conceptos</h1>" +
+        (lista ? '<ul class="repaso">' + lista + "</ul>" : "<p>No hay conceptos pendientes. ¡Buen trabajo!</p>") +
+        '<div class="acciones"><button type="button" class="boton" data-accion="misiones">Volver a misiones</button></div>' +
+      "</div>"
+    );
+  }
+
+  /* ---------- modo facilitador (?facilitador=1 o botón del pie con PIN) ---------- */
+  function pintarFacilitador() {
+    if (!esFacilitador) { return; }
+    barraFac.hidden = false;
+    var enJuego = !!partida && !respondida;
+    var conReloj = enJuego && Motor.mision(BANCO, partida.misionId).segundos && !progreso.sinReloj;
+    barraFac.innerHTML = "<strong>Modo facilitador</strong>" +
+      '<button type="button" class="boton boton--claro" data-accion="fac-proyector" aria-pressed="' +
+        (document.documentElement.classList.contains("proyector") ? "true" : "false") + '">Vista proyector</button>' +
+      (enJuego ? '<button type="button" class="boton boton--claro" data-accion="fac-clave">Ver respuesta</button>' +
+                 '<button type="button" class="boton boton--claro" data-accion="fac-saltar">Saltar reto</button>' : "") +
+      (conReloj ? '<button type="button" class="boton boton--claro" data-accion="fac-pausa" aria-pressed="' + (reloj.pausado ? "true" : "false") + '">' +
+        (reloj.pausado ? "Reanudar reloj" : "Pausar reloj") + "</button>" : "") +
+      (partida ? '<button type="button" class="boton boton--claro" data-accion="fac-reiniciar">Reiniciar misión</button>' : "") +
+      (!partida ? "<span>Todas las misiones están desbloqueadas.</span>" : "");
+  }
+
+  function pedirPin() {
+    if (esFacilitador) { return; }
+    var pin = window.prompt("PIN del facilitador:");
+    if (pin === null) { return; }
+    if (String(pin).trim() === String(BANCO.facilitador.pin)) {
+      esFacilitador = true;
+      if (partida) { verItem(); } else { pintarFacilitador(); if (progreso.sala) { verMisiones(); } }
+      anunciar("Modo facilitador activado.");
+    } else { window.alert("PIN incorrecto."); }
+  }
+
+  /* ---------- acciones (un solo escucha para toda la página) ---------- */
+  var ACCIONES = {
+    inicio: verInicio,
+    configurar: verConfiguracion,
+    modo: function (b) { if (config.n > 1) { leerNombres(); } config.n = parseInt(b.getAttribute("data-n"), 10) || 1; verConfiguracion(); },
+    "crear-sala": crearSala,
+    misiones: verMisiones,
+    presentar: function (b) { verPresentacion(b.getAttribute("data-mision")); },
+    jugar: function (b) { iniciar(b.getAttribute("data-mision")); },
+    "sin-reloj": function (b) {
+      progreso.sinReloj = !progreso.sinReloj; Motor.guardar(progreso);
+      b.setAttribute("aria-pressed", progreso.sinReloj ? "true" : "false");
+      b.textContent = progreso.sinReloj ? "Reloj: apagado" : "Reloj: encendido";
+    },
+    responder: function (b) { responder(b.getAttribute("data-respuesta")); },
+    marcar: function (b) {
+      if (!partida || respondida) { return; }
+      var id = b.getAttribute("data-id");
+      vista.marcadas = vista.marcadas || {};
+      if (vista.marcadas[id]) { delete vista.marcadas[id]; } else { vista.marcadas[id] = true; }
+      b.setAttribute("aria-pressed", vista.marcadas[id] ? "true" : "false");
+      b.classList.toggle("opcion--marcada");
+    },
+    mover: function (b) {
+      if (!partida || respondida || !vista.fila) { return; }
+      var id = b.getAttribute("data-id"), dir = parseInt(b.getAttribute("data-dir"), 10);
+      var i = vista.fila.indexOf(id), j = i + dir;
+      if (i < 0 || j < 0 || j >= vista.fila.length) { return; }
+      vista.fila[i] = vista.fila[j]; vista.fila[j] = id;
+      verItem();
+      // el foco sigue al paso que se movió
+      var mismo = document.getElementById((dir < 0 ? "subir-" : "bajar-") + id);
+      var otro = document.getElementById((dir < 0 ? "bajar-" : "subir-") + id);
+      var destino = mismo && !mismo.disabled ? mismo : otro;
+      if (destino) { destino.focus(); }
+      anunciar("Ahora está en la posición " + (j + 1) + ".");
+    },
+    comprobar: function () {
+      var item = partida && Motor.itemActual(partida);
+      if (!item || respondida) { return; }
+      if (item.tipo === "multi") {
+        var ids = Object.keys(vista.marcadas || {});
+        if (!ids.length) { anunciar("Marca al menos una opción."); return; }
+        responder(ids);
+      } else if (item.tipo === "ordenar") { responder(vista.fila.slice()); }
+    },
+    "comodin-mitad": function () {
+      var ocultas = partida && !respondida ? Motor.usarMitad(partida) : null;
+      if (ocultas) { vista.ocultas = ocultas; verItem(); anunciar("Se descartaron dos opciones."); }
+    },
+    "comodin-pista": function () {
+      var pista = partida && !respondida ? Motor.usarPista(partida) : null;
+      if (pista) { vista.pista = pista; verItem(); anunciar("Pista: " + pista); }
+    },
+    siguiente: siguiente,
+    resultados: verResultados,
+    repaso: verRepaso,
+    borrar: function () {
+      if (window.confirm("¿Borrar el progreso, los puntajes y las insignias de este dispositivo?")) {
+        progreso = Motor.borrar(); pintarSonido(); verInicio(); anunciar("Progreso borrado.");
+      }
+    },
+    "fac-proyector": function () { document.documentElement.classList.toggle("proyector"); pintarFacilitador(); },
+    "fac-clave": function () { var c = document.getElementById("clave"); if (c) { c.hidden = !c.hidden; } },
+    "fac-saltar": function () { if (partida && !respondida) { detenerReloj(); Motor.saltar(partida); siguiente(); } },
+    "fac-pausa": function () { reloj.pausado = !reloj.pausado; pintarReloj(); pintarFacilitador(); },
+    "fac-reiniciar": function () { if (partida) { detenerReloj(); reloj.id = null; iniciar(partida.misionId); } }
+  };
+
+  document.addEventListener("click", function (ev) {
+    var b = ev.target.closest ? ev.target.closest("[data-accion]") : null;
+    if (!b || b.disabled) { return; }
+    var accion = ACCIONES[b.getAttribute("data-accion")];
+    if (accion) { accion(b); }
+  });
+
+  // Teclas 1–9 para responder los retos de clasificar y de opción única
+  document.addEventListener("keydown", function (ev) {
+    if (!partida || respondida || ev.ctrlKey || ev.metaKey || ev.altKey) { return; }
+    var item = Motor.itemActual(partida);
+    if (!item) { return; }
+    var n = parseInt(ev.key, 10), ids;
+    if (item.tipo === "clasificar") { ids = opcionesDe(item).map(function (c) { return c.id; }); }
+    else if (item.tipo === "opcion") { ids = ordenVisible(item); }
+    else { return; }
+    if (n >= 1 && n <= ids.length && (vista.ocultas || []).indexOf(ids[n - 1]) < 0) { ev.preventDefault(); responder(ids[n - 1]); }
+  });
+
+  document.getElementById("btn-misiones").addEventListener("click", function () { detenerReloj(); verMisiones(); });
+  document.getElementById("btn-facilitador").addEventListener("click", pedirPin);
+  btnSonido.addEventListener("click", function () {
+    progreso.sonido = !progreso.sonido;
+    Motor.guardar(progreso); pintarSonido(); tono(660, 0.12);
+  });
+
+  /* ---------- arranque ---------- */
+  pintarSonido();
+  pintarFacilitador();
+
+  /* Estados fijos para las pantallas de revisión (carpeta capturas/).
+     Formato: "vista" o "mN:estado:equipos". No se usan en el juego normal. */
+  var demo = window.AA_DEMO;
+  if (demo) {
+    var partes = demo.split(":"), dVista = partes[0], dEstado = partes[1] || "", dN = parseInt(partes[2], 10) || 1;
+    var s = 7;
+    var fijo = function () { s = (s * 1664525 + 1013904223) % 4294967296; return s / 4294967296; };
+    var real = Math.random; Math.random = fijo;
+    progreso = Motor.progresoVacio();
+    progreso.sala = { equipos: dN > 1 ? ["Equipo Cian", "Equipo Azul", "Equipo Blanco"].slice(0, dN) : [] };
+    progreso.sinReloj = false;
+    Motor.guardar = function () { return false; };
+    var completar = function (id, fallos) {
+      var p = Motor.crearPartida(BANCO, id, fijo, { jugadores: dN, inicio: Motor.indiceMision(BANCO, id) });
+      while (!p.terminada) { var it = Motor.itemActual(p); Motor.responder(p, p.indice < fallos && !it.critico ? null : it.correcta); }
+      Motor.registrar(progreso, Motor.resumen(p));
+    };
+    var previas = function (hasta) { BANCO.misiones.slice(0, hasta).forEach(function (m, k) { completar(m.id, k % 3); }); };
+
+    if (dVista === "inicio") { progreso.sala = null; verInicio(); }
+    else if (dVista === "config") { progreso.sala = null; config.n = 3; verConfiguracion(); }
+    else if (dVista === "misiones") { previas(2); verMisiones(); }
+    else if (dVista === "resultados") { previas(6); verResultados(); }
+    else {
+      var idx = Motor.indiceMision(BANCO, dVista);
+      previas(idx);
+      setInterval = function () { return 1; };     // reloj quieto en las capturas
+      iniciar(dVista, fijo);
+      var saltos = parseInt(partes[3], 10) || 0;
+      for (var q = 0; q < saltos; q++) { Motor.responder(partida, Motor.itemActual(partida).correcta); }
+      if (dEstado === "ok") { verItem(); responder(Motor.itemActual(partida).correcta); }
+      else if (dEstado === "alerta") {
+        while (partida.indice < partida.items.length - 1 && !Motor.itemActual(partida).critico) { Motor.responder(partida, Motor.itemActual(partida).correcta); }
+        verItem();
+        var actual = Motor.itemActual(partida);
+        responder(opcionesDe(actual).map(function (o) { return o.id; }).filter(function (id) { return id !== actual.correcta; })[0]);
+      }
+      else if (dEstado === "resumen") {
+        while (!partida.terminada) { var x = Motor.itemActual(partida); Motor.responder(partida, partida.indice === 3 && !x.critico ? null : x.correcta); }
+        verResumen();
+      }
+      else { verItem(); }
+    }
+    Math.random = real;
+  } else {
+    verInicio();
+  }
+})();
+
+</script>
+</body>
+</html>

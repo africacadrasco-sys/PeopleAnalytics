@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="es-CO">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>EAFIT People Analytics Lab · IA aplicada a Talento Humano</title>
+  <meta name="description" content="Juego de repaso de People Analytics: cultura del dato, niveles de madurez, habilidades clave y las nueve dimensiones. Material de apoyo académico.">
+  <meta name="robots" content="noindex">
+  <link rel="stylesheet" href="css/estilos.css">
+</head>
+<body>
+  <a class="salto" href="#contenido">Saltar al contenido</a>
+
+  <header class="cabecera">
+    <div class="cabecera__marca">
+      <img class="cabecera__logo" src="brand/logo-eafit-azul-sobre-blanco.png" width="731" height="328" alt="Universidad EAFIT">
+      <span class="cabecera__nombre">People Analytics Lab</span>
+    </div>
+    <nav class="cabecera__acciones" aria-label="Opciones del juego">
+      <button type="button" class="boton boton--texto" id="btn-misiones">Misiones</button>
+      <button type="button" class="boton boton--texto" id="btn-sonido" aria-pressed="false">Sonido: apagado</button>
+    </nav>
+  </header>
+
+  <div id="barra-facilitador" class="facilitador" hidden></div>
+
+  <main id="contenido" tabindex="-1"></main>
+
+  <footer class="pie">
+    <p class="pie__institucional">Universidad EAFIT · www.eafit.edu.co · Vigilada Mineducación</p>
+    <p class="pie__academico">Material de apoyo académico — Programa IA aplicada a Talento Humano</p>
+    <button type="button" class="boton boton--texto pie__facilitador" id="btn-facilitador">Facilitador</button>
+  </footer>
+
+  <div id="vivo" class="solo-lectores" aria-live="polite"></div>
+
+  <noscript><p style="padding:1rem">Este juego necesita JavaScript activado en el navegador.</p></noscript>
+
+  <script src="data/preguntas.js"></script>
+  <script src="js/motor.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
